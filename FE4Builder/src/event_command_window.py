@@ -105,6 +105,14 @@ class EventCommandWindow(tk.Toplevel):
         for i,(label,offset,size,low,high) in enumerate(FIELDS.get(schema(c),[])):
             ttk.Label(self.fields,text=label if c['opcode']==0x42 and i==1 else label+f' ({low}–{high})').grid(row=i,column=0,sticky='w',padx=(0,12),pady=4)
             options={f'{name} (0x{value:04X})':value for value,name in self.names.items()} if schema(c)=='character_sprite' else {}
+            if c['opcode'] in (0x4b,0x4c):
+                from event_commands import chapter_flag_options
+                from events import CHAPTERS
+                chapter=number(self.drafts[index][0])
+                known=dict(enumerate(CHAPTERS)) if i==0 else chapter_flag_options(chapter)
+                old=number(self.drafts[index][i])
+                if old not in known:known[old]='Existing unsupported value (preserve only)'
+                options={f'{name} [ID {value}]':value for value,name in known.items()}
             if c['opcode']==0x23 and i in (0,1):
                 if i==0:known=unit_groups(self.rom)
                 else:
@@ -159,6 +167,23 @@ class EventCommandWindow(tk.Toplevel):
                     except ValueError:self.help.set(HELP[0x12]);return
                     self.help.set(HELP[0x12]+'\n\n'+describe_word(value))
                 var.trace_add('write',explain_word);explain_word()
+        if c['opcode'] in (0x4b,0x4c):
+            def update_flags(*_):
+                from event_commands import chapter_flag_options
+                chapter=self.field_options[0].get(self.variables[0].get())
+                if chapter is None:return
+                value=self.field_options[1].get(self.variables[1].get())
+                if value is None:
+                    try:value=number(self.variables[1].get())
+                    except ValueError:return
+                known=chapter_flag_options(chapter)
+                if value not in known:known[value]='Existing unsupported value (preserve only)'
+                options={f'{name} [ID {key}]':key for key,name in known.items()}
+                self.field_options[1]=options
+                self.fields.grid_slaves(row=1,column=1)[0].config(values=list(options))
+                self.variables[1].set(next(label for label,key in options.items() if key==value))
+                self.remember_command()
+            self.variables[0].trace_add('write',update_flags)
         if c['opcode']==0x27:
             from movement_routes import route_preview
             raw_command=self.model.snapshot[c['offset']:c['offset']+c['size']]

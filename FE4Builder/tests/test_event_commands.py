@@ -30,7 +30,7 @@ class EventCommandTests(unittest.TestCase):
                 self.assertTrue(changed);self.assertTrue(changed<=allowed)
                 self.assertEqual(EventCommands(self.rom,index).values(command),values)
                 self.rom.data[start:start+len(baseline)]=baseline;count+=1
-        self.assertEqual(count,217);self.assertEqual(bytes(self.rom.data),original)
+        self.assertEqual(count,219);self.assertEqual(bytes(self.rom.data),original)
     def test_direct_deployment_packed_fields_and_ui(self):
         from FE4Builder import App
         original=bytes(self.rom.data)

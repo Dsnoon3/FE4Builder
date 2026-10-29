@@ -2002,9 +2002,17 @@
           [
             170,
             3
+          ],
+          [
+            181,
+            2
+          ],
+          [
+            184,
+            2
           ]
         ],
-        "hash": "ba28cae67c0f377042a8c4f3b5dc06fa991feb0cc10e922cb1568eb5a8126580",
+        "hash": "1dd48f61c83a12ae2258286d3e0a1d5e98549506e01f7d01bc8c44e392c66e50",
         "switches": []
       },
       "commands": [
@@ -2422,7 +2430,7 @@
           "size": 3,
           "name": "UNSET_FLAG_IF_IN_CHAPTER",
           "condition": null,
-          "editable": false
+          "editable": true
         },
         {
           "offset": 183,
@@ -2430,7 +2438,7 @@
           "size": 3,
           "name": "SET_FLAG_IF_IN_CHAPTER",
           "condition": null,
-          "editable": false
+          "editable": true
         },
         {
           "offset": 186,
@@ -5904,9 +5912,17 @@
         [
           170,
           3
+        ],
+        [
+          181,
+          2
+        ],
+        [
+          184,
+          2
         ]
       ],
-      "hash": "ba28cae67c0f377042a8c4f3b5dc06fa991feb0cc10e922cb1568eb5a8126580",
+      "hash": "1dd48f61c83a12ae2258286d3e0a1d5e98549506e01f7d01bc8c44e392c66e50",
       "switches": []
     },
     {
@@ -6539,5 +6555,11 @@
       "label": "Prologue Village Speed Ring",
       "reason": "Source command count mismatch"
     }
-  ]
+  ],
+  "chapter_flags": {
+    "0": {
+      "23": "Bridge Raised",
+      "22": "Bridge Lowered"
+    }
+  }
 }
