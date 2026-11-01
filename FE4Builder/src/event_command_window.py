@@ -113,7 +113,7 @@ class EventCommandWindow(tk.Toplevel):
                 old=number(self.drafts[index][i])
                 if old not in known:known[old]='Existing unsupported value (preserve only)'
                 options={f'{name} [ID {value}]':value for value,name in known.items()}
-            if c['opcode']==0x23 and i in (0,1):
+            if (c['opcode']==0x23 and i in (0,1)) or schema(c)=='deploy_group':
                 if i==0:known=unit_groups(self.rom)
                 else:
                     group=number(self.drafts[index][0]);known={k:v['label'] for k,v in group_units(self.rom,group).items()}
@@ -184,6 +184,17 @@ class EventCommandWindow(tk.Toplevel):
                 self.variables[1].set(next(label for label,key in options.items() if key==value))
                 self.remember_command()
             self.variables[0].trace_add('write',update_flags)
+        if schema(c)=='deploy_group':
+            def explain_group(*_):
+                if self.command!=index:return
+                try:
+                    label=self.variables[0].get();group=self.field_options[0].get(label)
+                    if group is None:group=number(label)
+                    units=group_units(self.rom,group)
+                    rows=[f"{u['label']}: destination ({u['x']}, {u['y']}), faction {u['faction']}, AI {u['ai']}, commander {'Yes' if u['leader'] else 'No'}, formation {u['formation']}" for u in units.values()]
+                    self.help.set(HELP['deploy_group']+f'\n\nArmy group preview ({len(units)} records):\n'+'\n'.join(rows))
+                except ValueError as error:self.help.set(HELP['deploy_group']+'\n\nPreview unavailable: '+str(error))
+            self.variables[0].trace_add('write',explain_group);explain_group()
         if c['opcode']==0x27:
             from movement_routes import route_preview
             raw_command=self.model.snapshot[c['offset']:c['offset']+c['size']]
