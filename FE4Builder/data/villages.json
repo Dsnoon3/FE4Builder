@@ -7,7 +7,37 @@
     "start": 1084033,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 5,
+      "address": 445340,
+      "guards": [
+        [
+          444259,
+          "59cb86"
+        ],
+        [
+          445273,
+          "63cb"
+        ],
+        [
+          445283,
+          "0874cb7ccb84cb8ccb94cb9ccba1cba6cb"
+        ],
+        [
+          445340,
+          "050002"
+        ],
+        [
+          444746,
+          "0affffff0500"
+        ],
+        [
+          444752,
+          "30ff3400"
+        ]
+      ]
+    }
   },
   {
     "chapter": 1,
@@ -17,7 +47,37 @@
     "start": 1084047,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 6,
+      "address": 445345,
+      "guards": [
+        [
+          444259,
+          "59cb86"
+        ],
+        [
+          445273,
+          "63cb"
+        ],
+        [
+          445283,
+          "0874cb7ccb84cb8ccb94cb9ccba1cba6cb"
+        ],
+        [
+          445345,
+          "060002"
+        ],
+        [
+          444756,
+          "0affffff0600"
+        ],
+        [
+          444762,
+          "30ff3500"
+        ]
+      ]
+    }
   },
   {
     "chapter": 1,
@@ -27,7 +87,37 @@
     "start": 1084061,
     "length": 26,
     "reward": null,
-    "signature": "8a0cf465d5249c782304ebf6d0bd87cd7fed7285834c5e3317aa0b6d3a97751d"
+    "signature": "8a0cf465d5249c782304ebf6d0bd87cd7fed7285834c5e3317aa0b6d3a97751d",
+    "location": {
+      "id": 7,
+      "address": 445350,
+      "guards": [
+        [
+          444259,
+          "59cb86"
+        ],
+        [
+          445273,
+          "63cb"
+        ],
+        [
+          445283,
+          "0874cb7ccb84cb8ccb94cb9ccba1cba6cb"
+        ],
+        [
+          445350,
+          "070002"
+        ],
+        [
+          444766,
+          "0affffff0700"
+        ],
+        [
+          444772,
+          "30ff3600"
+        ]
+      ]
+    }
   },
   {
     "chapter": 2,
@@ -37,7 +127,37 @@
     "start": 952595,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 7,
+      "address": 446892,
+      "guards": [
+        [
+          444262,
+          "4cd186"
+        ],
+        [
+          446796,
+          "56d1"
+        ],
+        [
+          446806,
+          "1077d17fd187d18fd197d19fd1a7d1acd1b1d1b6d1bbd1c0d1c5d1cad1cfd1d4d1"
+        ],
+        [
+          446892,
+          "070002"
+        ],
+        [
+          445945,
+          "0affffff0700"
+        ],
+        [
+          445951,
+          "30ff6600"
+        ]
+      ]
+    }
   },
   {
     "chapter": 2,
@@ -47,7 +167,37 @@
     "start": 952034,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 8,
+      "address": 446897,
+      "guards": [
+        [
+          444262,
+          "4cd186"
+        ],
+        [
+          446796,
+          "56d1"
+        ],
+        [
+          446806,
+          "1077d17fd187d18fd197d19fd1a7d1acd1b1d1b6d1bbd1c0d1c5d1cad1cfd1d4d1"
+        ],
+        [
+          446897,
+          "080002"
+        ],
+        [
+          445955,
+          "0affffff0800"
+        ],
+        [
+          445961,
+          "30ff5700"
+        ]
+      ]
+    }
   },
   {
     "chapter": 2,
@@ -57,7 +207,37 @@
     "start": 952609,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 9,
+      "address": 446902,
+      "guards": [
+        [
+          444262,
+          "4cd186"
+        ],
+        [
+          446796,
+          "56d1"
+        ],
+        [
+          446806,
+          "1077d17fd187d18fd197d19fd1a7d1acd1b1d1b6d1bbd1c0d1c5d1cad1cfd1d4d1"
+        ],
+        [
+          446902,
+          "090002"
+        ],
+        [
+          445965,
+          "0affffff0900"
+        ],
+        [
+          445971,
+          "30ff6700"
+        ]
+      ]
+    }
   },
   {
     "chapter": 2,
@@ -67,7 +247,37 @@
     "start": 952048,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 10,
+      "address": 446907,
+      "guards": [
+        [
+          444262,
+          "4cd186"
+        ],
+        [
+          446796,
+          "56d1"
+        ],
+        [
+          446806,
+          "1077d17fd187d18fd197d19fd1a7d1acd1b1d1b6d1bbd1c0d1c5d1cad1cfd1d4d1"
+        ],
+        [
+          446907,
+          "0a0002"
+        ],
+        [
+          445975,
+          "0affffff0a00"
+        ],
+        [
+          445981,
+          "30ff5800"
+        ]
+      ]
+    }
   },
   {
     "chapter": 2,
@@ -77,7 +287,37 @@
     "start": 952020,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 11,
+      "address": 446912,
+      "guards": [
+        [
+          444262,
+          "4cd186"
+        ],
+        [
+          446796,
+          "56d1"
+        ],
+        [
+          446806,
+          "1077d17fd187d18fd197d19fd1a7d1acd1b1d1b6d1bbd1c0d1c5d1cad1cfd1d4d1"
+        ],
+        [
+          446912,
+          "0b0002"
+        ],
+        [
+          445985,
+          "0affffff0b00"
+        ],
+        [
+          445991,
+          "30ff5600"
+        ]
+      ]
+    }
   },
   {
     "chapter": 2,
@@ -87,7 +327,37 @@
     "start": 952062,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 12,
+      "address": 446917,
+      "guards": [
+        [
+          444262,
+          "4cd186"
+        ],
+        [
+          446796,
+          "56d1"
+        ],
+        [
+          446806,
+          "1077d17fd187d18fd197d19fd1a7d1acd1b1d1b6d1bbd1c0d1c5d1cad1cfd1d4d1"
+        ],
+        [
+          446917,
+          "0c0002"
+        ],
+        [
+          445995,
+          "0affffff0c00"
+        ],
+        [
+          446001,
+          "30ff5900"
+        ]
+      ]
+    }
   },
   {
     "chapter": 2,
@@ -97,7 +367,37 @@
     "start": 952076,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 13,
+      "address": 446922,
+      "guards": [
+        [
+          444262,
+          "4cd186"
+        ],
+        [
+          446796,
+          "56d1"
+        ],
+        [
+          446806,
+          "1077d17fd187d18fd197d19fd1a7d1acd1b1d1b6d1bbd1c0d1c5d1cad1cfd1d4d1"
+        ],
+        [
+          446922,
+          "0d0002"
+        ],
+        [
+          446005,
+          "0affffff0d00"
+        ],
+        [
+          446011,
+          "30ff5a00"
+        ]
+      ]
+    }
   },
   {
     "chapter": 2,
@@ -107,7 +407,37 @@
     "start": 951968,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 14,
+      "address": 446927,
+      "guards": [
+        [
+          444262,
+          "4cd186"
+        ],
+        [
+          446796,
+          "56d1"
+        ],
+        [
+          446806,
+          "1077d17fd187d18fd197d19fd1a7d1acd1b1d1b6d1bbd1c0d1c5d1cad1cfd1d4d1"
+        ],
+        [
+          446927,
+          "0e0002"
+        ],
+        [
+          446015,
+          "0affffff0e00"
+        ],
+        [
+          446021,
+          "30ff5300"
+        ]
+      ]
+    }
   },
   {
     "chapter": 2,
@@ -117,7 +447,37 @@
     "start": 952001,
     "length": 19,
     "reward": 0,
-    "signature": "0e699ef763537c20926136ef039af06e18211a8ff5a4f058b20b8854128082fe"
+    "signature": "0e699ef763537c20926136ef039af06e18211a8ff5a4f058b20b8854128082fe",
+    "location": {
+      "id": 15,
+      "address": 446932,
+      "guards": [
+        [
+          444262,
+          "4cd186"
+        ],
+        [
+          446796,
+          "56d1"
+        ],
+        [
+          446806,
+          "1077d17fd187d18fd197d19fd1a7d1acd1b1d1b6d1bbd1c0d1c5d1cad1cfd1d4d1"
+        ],
+        [
+          446932,
+          "0f0002"
+        ],
+        [
+          446025,
+          "0affffff0f00"
+        ],
+        [
+          446031,
+          "30ff5500"
+        ]
+      ]
+    }
   },
   {
     "chapter": 2,
@@ -127,7 +487,37 @@
     "start": 951982,
     "length": 19,
     "reward": 0,
-    "signature": "0e699ef763537c20926136ef039af06e18211a8ff5a4f058b20b8854128082fe"
+    "signature": "0e699ef763537c20926136ef039af06e18211a8ff5a4f058b20b8854128082fe",
+    "location": {
+      "id": 6,
+      "address": 446887,
+      "guards": [
+        [
+          444262,
+          "4cd186"
+        ],
+        [
+          446796,
+          "56d1"
+        ],
+        [
+          446806,
+          "1077d17fd187d18fd197d19fd1a7d1acd1b1d1b6d1bbd1c0d1c5d1cad1cfd1d4d1"
+        ],
+        [
+          446887,
+          "060002"
+        ],
+        [
+          445935,
+          "0affffff0600"
+        ],
+        [
+          445941,
+          "30ff5400"
+        ]
+      ]
+    }
   },
   {
     "chapter": 3,
@@ -137,7 +527,37 @@
     "start": 1937868,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 4,
+      "address": 448171,
+      "guards": [
+        [
+          444265,
+          "68d686"
+        ],
+        [
+          448104,
+          "72d6"
+        ],
+        [
+          448114,
+          "0c8bd693d69bd6a3d6abd6b0d6b5d6bad6bfd6c4d6c9d6ced6"
+        ],
+        [
+          448171,
+          "040002"
+        ],
+        [
+          447666,
+          "0affffff0400"
+        ],
+        [
+          447672,
+          "30ff8c00"
+        ]
+      ]
+    }
   },
   {
     "chapter": 3,
@@ -147,7 +567,37 @@
     "start": 1937676,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 5,
+      "address": 448176,
+      "guards": [
+        [
+          444265,
+          "68d686"
+        ],
+        [
+          448104,
+          "72d6"
+        ],
+        [
+          448114,
+          "0c8bd693d69bd6a3d6abd6b0d6b5d6bad6bfd6c4d6c9d6ced6"
+        ],
+        [
+          448176,
+          "050002"
+        ],
+        [
+          447676,
+          "0affffff0500"
+        ],
+        [
+          447682,
+          "30ff8500"
+        ]
+      ]
+    }
   },
   {
     "chapter": 3,
@@ -157,7 +607,37 @@
     "start": 1937801,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 7,
+      "address": 448186,
+      "guards": [
+        [
+          444265,
+          "68d686"
+        ],
+        [
+          448104,
+          "72d6"
+        ],
+        [
+          448114,
+          "0c8bd693d69bd6a3d6abd6b0d6b5d6bad6bfd6c4d6c9d6ced6"
+        ],
+        [
+          448186,
+          "070002"
+        ],
+        [
+          447696,
+          "0affffff0700"
+        ],
+        [
+          447702,
+          "30ff8a00"
+        ]
+      ]
+    }
   },
   {
     "chapter": 3,
@@ -167,7 +647,37 @@
     "start": 1937774,
     "length": 27,
     "reward": null,
-    "signature": "b6d1f4e004e08fda7e2c7e3a47d9c584b7d3dd5fa349383f3b7f20a3c5883032"
+    "signature": "b6d1f4e004e08fda7e2c7e3a47d9c584b7d3dd5fa349383f3b7f20a3c5883032",
+    "location": {
+      "id": 9,
+      "address": 448196,
+      "guards": [
+        [
+          444265,
+          "68d686"
+        ],
+        [
+          448104,
+          "72d6"
+        ],
+        [
+          448114,
+          "0c8bd693d69bd6a3d6abd6b0d6b5d6bad6bfd6c4d6c9d6ced6"
+        ],
+        [
+          448196,
+          "090002"
+        ],
+        [
+          447716,
+          "0affffff0900"
+        ],
+        [
+          447722,
+          "30ff8900"
+        ]
+      ]
+    }
   },
   {
     "chapter": 3,
@@ -177,7 +687,37 @@
     "start": 1937728,
     "length": 27,
     "reward": 12,
-    "signature": "d61e8ed552539b4f2c0a519c874b3f96148abd90d4f9edb594228096e7dde151"
+    "signature": "d61e8ed552539b4f2c0a519c874b3f96148abd90d4f9edb594228096e7dde151",
+    "location": {
+      "id": 10,
+      "address": 448201,
+      "guards": [
+        [
+          444265,
+          "68d686"
+        ],
+        [
+          448104,
+          "72d6"
+        ],
+        [
+          448114,
+          "0c8bd693d69bd6a3d6abd6b0d6b5d6bad6bfd6c4d6c9d6ced6"
+        ],
+        [
+          448201,
+          "0a0002"
+        ],
+        [
+          447726,
+          "0affffff0a00"
+        ],
+        [
+          447732,
+          "30ff8800"
+        ]
+      ]
+    }
   },
   {
     "chapter": 3,
@@ -187,7 +727,37 @@
     "start": 1937709,
     "length": 19,
     "reward": 0,
-    "signature": "0e699ef763537c20926136ef039af06e18211a8ff5a4f058b20b8854128082fe"
+    "signature": "0e699ef763537c20926136ef039af06e18211a8ff5a4f058b20b8854128082fe",
+    "location": {
+      "id": 11,
+      "address": 448206,
+      "guards": [
+        [
+          444265,
+          "68d686"
+        ],
+        [
+          448104,
+          "72d6"
+        ],
+        [
+          448114,
+          "0c8bd693d69bd6a3d6abd6b0d6b5d6bad6bfd6c4d6c9d6ced6"
+        ],
+        [
+          448206,
+          "0b0002"
+        ],
+        [
+          447736,
+          "0affffff0b00"
+        ],
+        [
+          447742,
+          "30ff8700"
+        ]
+      ]
+    }
   },
   {
     "chapter": 3,
@@ -197,7 +767,37 @@
     "start": 1937815,
     "length": 34,
     "reward": 19,
-    "signature": "80565930bd1ff611da0c3bfdfc603cdac778672aedf6ecac42b003b54a41db87"
+    "signature": "80565930bd1ff611da0c3bfdfc603cdac778672aedf6ecac42b003b54a41db87",
+    "location": {
+      "id": 8,
+      "address": 448191,
+      "guards": [
+        [
+          444265,
+          "68d686"
+        ],
+        [
+          448104,
+          "72d6"
+        ],
+        [
+          448114,
+          "0c8bd693d69bd6a3d6abd6b0d6b5d6bad6bfd6c4d6c9d6ced6"
+        ],
+        [
+          448191,
+          "080002"
+        ],
+        [
+          447706,
+          "0affffff0800"
+        ],
+        [
+          447712,
+          "30ff8b00"
+        ]
+      ]
+    }
   },
   {
     "chapter": 3,
@@ -207,7 +807,37 @@
     "start": 1937690,
     "length": 19,
     "reward": 0,
-    "signature": "0e699ef763537c20926136ef039af06e18211a8ff5a4f058b20b8854128082fe"
+    "signature": "0e699ef763537c20926136ef039af06e18211a8ff5a4f058b20b8854128082fe",
+    "location": {
+      "id": 6,
+      "address": 448181,
+      "guards": [
+        [
+          444265,
+          "68d686"
+        ],
+        [
+          448104,
+          "72d6"
+        ],
+        [
+          448114,
+          "0c8bd693d69bd6a3d6abd6b0d6b5d6bad6bfd6c4d6c9d6ced6"
+        ],
+        [
+          448181,
+          "060002"
+        ],
+        [
+          447686,
+          "0affffff0600"
+        ],
+        [
+          447692,
+          "30ff8600"
+        ]
+      ]
+    }
   },
   {
     "chapter": 4,
@@ -217,7 +847,37 @@
     "start": 957023,
     "length": 35,
     "reward": null,
-    "signature": "c808130fbf34e22b005a13e6859950e762ec88e45d7fdbf09a0d7ea3294c7aff"
+    "signature": "c808130fbf34e22b005a13e6859950e762ec88e45d7fdbf09a0d7ea3294c7aff",
+    "location": {
+      "id": 4,
+      "address": 449724,
+      "guards": [
+        [
+          444268,
+          "79dc86"
+        ],
+        [
+          449657,
+          "83dc"
+        ],
+        [
+          449667,
+          "0c9cdca4dcacdcb4dcbcdcc1dcc6dccbdcd0dcd5dcdadcdfdc"
+        ],
+        [
+          449724,
+          "040002"
+        ],
+        [
+          449055,
+          "0affffff0400"
+        ],
+        [
+          449061,
+          "30ffb200"
+        ]
+      ]
+    }
   },
   {
     "chapter": 4,
@@ -227,7 +887,37 @@
     "start": 956981,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 6,
+      "address": 449734,
+      "guards": [
+        [
+          444268,
+          "79dc86"
+        ],
+        [
+          449657,
+          "83dc"
+        ],
+        [
+          449667,
+          "0c9cdca4dcacdcb4dcbcdcc1dcc6dccbdcd0dcd5dcdadcdfdc"
+        ],
+        [
+          449734,
+          "060002"
+        ],
+        [
+          449025,
+          "0affffff0600"
+        ],
+        [
+          449031,
+          "30ffaf00"
+        ]
+      ]
+    }
   },
   {
     "chapter": 4,
@@ -237,7 +927,37 @@
     "start": 956967,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 7,
+      "address": 449739,
+      "guards": [
+        [
+          444268,
+          "79dc86"
+        ],
+        [
+          449657,
+          "83dc"
+        ],
+        [
+          449667,
+          "0c9cdca4dcacdcb4dcbcdcc1dcc6dccbdcd0dcd5dcdadcdfdc"
+        ],
+        [
+          449739,
+          "070002"
+        ],
+        [
+          449015,
+          "0affffff0700"
+        ],
+        [
+          449021,
+          "30ffae00"
+        ]
+      ]
+    }
   },
   {
     "chapter": 4,
@@ -247,7 +967,37 @@
     "start": 956939,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 8,
+      "address": 449744,
+      "guards": [
+        [
+          444268,
+          "79dc86"
+        ],
+        [
+          449657,
+          "83dc"
+        ],
+        [
+          449667,
+          "0c9cdca4dcacdcb4dcbcdcc1dcc6dccbdcd0dcd5dcdadcdfdc"
+        ],
+        [
+          449744,
+          "080002"
+        ],
+        [
+          448995,
+          "0affffff0800"
+        ],
+        [
+          449001,
+          "30ffac00"
+        ]
+      ]
+    }
   },
   {
     "chapter": 4,
@@ -257,7 +1007,37 @@
     "start": 956953,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 9,
+      "address": 449749,
+      "guards": [
+        [
+          444268,
+          "79dc86"
+        ],
+        [
+          449657,
+          "83dc"
+        ],
+        [
+          449667,
+          "0c9cdca4dcacdcb4dcbcdcc1dcc6dccbdcd0dcd5dcdadcdfdc"
+        ],
+        [
+          449749,
+          "090002"
+        ],
+        [
+          449005,
+          "0affffff0900"
+        ],
+        [
+          449011,
+          "30ffad00"
+        ]
+      ]
+    }
   },
   {
     "chapter": 4,
@@ -267,7 +1047,37 @@
     "start": 957009,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 10,
+      "address": 449754,
+      "guards": [
+        [
+          444268,
+          "79dc86"
+        ],
+        [
+          449657,
+          "83dc"
+        ],
+        [
+          449667,
+          "0c9cdca4dcacdcb4dcbcdcc1dcc6dccbdcd0dcd5dcdadcdfdc"
+        ],
+        [
+          449754,
+          "0a0002"
+        ],
+        [
+          449045,
+          "0affffff0a00"
+        ],
+        [
+          449051,
+          "30ffb100"
+        ]
+      ]
+    }
   },
   {
     "chapter": 4,
@@ -277,7 +1087,37 @@
     "start": 956925,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 11,
+      "address": 449759,
+      "guards": [
+        [
+          444268,
+          "79dc86"
+        ],
+        [
+          449657,
+          "83dc"
+        ],
+        [
+          449667,
+          "0c9cdca4dcacdcb4dcbcdcc1dcc6dccbdcd0dcd5dcdadcdfdc"
+        ],
+        [
+          449759,
+          "0b0002"
+        ],
+        [
+          448985,
+          "0affffff0b00"
+        ],
+        [
+          448991,
+          "30ffab00"
+        ]
+      ]
+    }
   },
   {
     "chapter": 4,
@@ -287,7 +1127,37 @@
     "start": 956995,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 5,
+      "address": 449729,
+      "guards": [
+        [
+          444268,
+          "79dc86"
+        ],
+        [
+          449657,
+          "83dc"
+        ],
+        [
+          449667,
+          "0c9cdca4dcacdcb4dcbcdcc1dcc6dccbdcd0dcd5dcdadcdfdc"
+        ],
+        [
+          449729,
+          "050002"
+        ],
+        [
+          449035,
+          "0affffff0500"
+        ],
+        [
+          449041,
+          "30ffb000"
+        ]
+      ]
+    }
   },
   {
     "chapter": 4,
@@ -297,7 +1167,37 @@
     "start": 957142,
     "length": 84,
     "reward": 68,
-    "signature": "21d20cb8fe4b4d52d2d9ca8237c70cfccdd3456bb8f4dab281c33521e76664c1"
+    "signature": "21d20cb8fe4b4d52d2d9ca8237c70cfccdd3456bb8f4dab281c33521e76664c1",
+    "location": {
+      "id": 5,
+      "address": 449729,
+      "guards": [
+        [
+          444268,
+          "79dc86"
+        ],
+        [
+          449657,
+          "83dc"
+        ],
+        [
+          449667,
+          "0c9cdca4dcacdcb4dcbcdcc1dcc6dccbdcd0dcd5dcdadcdfdc"
+        ],
+        [
+          449729,
+          "050002"
+        ],
+        [
+          448975,
+          "0aff16000500"
+        ],
+        [
+          448981,
+          "30ffb600"
+        ]
+      ]
+    }
   },
   {
     "chapter": 5,
@@ -307,7 +1207,37 @@
     "start": 1952314,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 5,
+      "address": 451931,
+      "guards": [
+        [
+          444271,
+          "10e586"
+        ],
+        [
+          451856,
+          "1ae5"
+        ],
+        [
+          451866,
+          "0c33e53be543e54be553e55be560e565e56ae56fe574e579e5"
+        ],
+        [
+          451931,
+          "050002"
+        ],
+        [
+          450648,
+          "0affffff0500"
+        ],
+        [
+          450654,
+          "30ffcb00"
+        ]
+      ]
+    }
   },
   {
     "chapter": 5,
@@ -317,7 +1247,37 @@
     "start": 1952328,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 6,
+      "address": 451936,
+      "guards": [
+        [
+          444271,
+          "10e586"
+        ],
+        [
+          451856,
+          "1ae5"
+        ],
+        [
+          451866,
+          "0c33e53be543e54be553e55be560e565e56ae56fe574e579e5"
+        ],
+        [
+          451936,
+          "060002"
+        ],
+        [
+          450658,
+          "0affffff0600"
+        ],
+        [
+          450664,
+          "30ffcc00"
+        ]
+      ]
+    }
   },
   {
     "chapter": 5,
@@ -327,7 +1287,37 @@
     "start": 1952342,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 7,
+      "address": 451941,
+      "guards": [
+        [
+          444271,
+          "10e586"
+        ],
+        [
+          451856,
+          "1ae5"
+        ],
+        [
+          451866,
+          "0c33e53be543e54be553e55be560e565e56ae56fe574e579e5"
+        ],
+        [
+          451941,
+          "070002"
+        ],
+        [
+          450668,
+          "0affffff0700"
+        ],
+        [
+          450674,
+          "30ffcd00"
+        ]
+      ]
+    }
   },
   {
     "chapter": 5,
@@ -337,7 +1327,37 @@
     "start": 1952356,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 8,
+      "address": 451946,
+      "guards": [
+        [
+          444271,
+          "10e586"
+        ],
+        [
+          451856,
+          "1ae5"
+        ],
+        [
+          451866,
+          "0c33e53be543e54be553e55be560e565e56ae56fe574e579e5"
+        ],
+        [
+          451946,
+          "080002"
+        ],
+        [
+          450678,
+          "0affffff0800"
+        ],
+        [
+          450684,
+          "30ffce00"
+        ]
+      ]
+    }
   },
   {
     "chapter": 5,
@@ -347,7 +1367,37 @@
     "start": 1952370,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 9,
+      "address": 451951,
+      "guards": [
+        [
+          444271,
+          "10e586"
+        ],
+        [
+          451856,
+          "1ae5"
+        ],
+        [
+          451866,
+          "0c33e53be543e54be553e55be560e565e56ae56fe574e579e5"
+        ],
+        [
+          451951,
+          "090002"
+        ],
+        [
+          450688,
+          "0affffff0900"
+        ],
+        [
+          450694,
+          "30ffcf00"
+        ]
+      ]
+    }
   },
   {
     "chapter": 5,
@@ -357,7 +1407,37 @@
     "start": 1952384,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 10,
+      "address": 451956,
+      "guards": [
+        [
+          444271,
+          "10e586"
+        ],
+        [
+          451856,
+          "1ae5"
+        ],
+        [
+          451866,
+          "0c33e53be543e54be553e55be560e565e56ae56fe574e579e5"
+        ],
+        [
+          451956,
+          "0a0002"
+        ],
+        [
+          450698,
+          "0affffff0a00"
+        ],
+        [
+          450704,
+          "30ffd000"
+        ]
+      ]
+    }
   },
   {
     "chapter": 5,
@@ -367,7 +1447,37 @@
     "start": 1952408,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 11,
+      "address": 451961,
+      "guards": [
+        [
+          444271,
+          "10e586"
+        ],
+        [
+          451856,
+          "1ae5"
+        ],
+        [
+          451866,
+          "0c33e53be543e54be553e55be560e565e56ae56fe574e579e5"
+        ],
+        [
+          451961,
+          "0b0002"
+        ],
+        [
+          450708,
+          "0affffff0b00"
+        ],
+        [
+          450714,
+          "30ffd400"
+        ]
+      ]
+    }
   },
   {
     "chapter": 6,
@@ -377,7 +1487,37 @@
     "start": 1168630,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 5,
+      "address": 3310403,
+      "guards": [
+        [
+          444274,
+          "fa82b2"
+        ],
+        [
+          3310330,
+          "0483"
+        ],
+        [
+          3310340,
+          "0b1b8323832b8333833b83438348834d83528357835c83"
+        ],
+        [
+          3310403,
+          "050002"
+        ],
+        [
+          3309911,
+          "0affffff0500"
+        ],
+        [
+          3309917,
+          "30ffe400"
+        ]
+      ]
+    }
   },
   {
     "chapter": 6,
@@ -387,7 +1527,37 @@
     "start": 1168644,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 6,
+      "address": 3310408,
+      "guards": [
+        [
+          444274,
+          "fa82b2"
+        ],
+        [
+          3310330,
+          "0483"
+        ],
+        [
+          3310340,
+          "0b1b8323832b8333833b83438348834d83528357835c83"
+        ],
+        [
+          3310408,
+          "060002"
+        ],
+        [
+          3309921,
+          "0affffff0600"
+        ],
+        [
+          3309927,
+          "30ffe500"
+        ]
+      ]
+    }
   },
   {
     "chapter": 6,
@@ -397,7 +1567,37 @@
     "start": 1168815,
     "length": 26,
     "reward": null,
-    "signature": "ba30faa42c4adb673f621361c0b2031491ab70b7dffb33b4f4133cb66fc0d774"
+    "signature": "ba30faa42c4adb673f621361c0b2031491ab70b7dffb33b4f4133cb66fc0d774",
+    "location": {
+      "id": 6,
+      "address": 3310408,
+      "guards": [
+        [
+          444274,
+          "fa82b2"
+        ],
+        [
+          3310330,
+          "0483"
+        ],
+        [
+          3310340,
+          "0b1b8323832b8333833b83438348834d83528357835c83"
+        ],
+        [
+          3310408,
+          "060002"
+        ],
+        [
+          3309901,
+          "0aff19000600"
+        ],
+        [
+          3309907,
+          "30fff100"
+        ]
+      ]
+    }
   },
   {
     "chapter": 6,
@@ -407,7 +1607,37 @@
     "start": 1168658,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 7,
+      "address": 3310413,
+      "guards": [
+        [
+          444274,
+          "fa82b2"
+        ],
+        [
+          3310330,
+          "0483"
+        ],
+        [
+          3310340,
+          "0b1b8323832b8333833b83438348834d83528357835c83"
+        ],
+        [
+          3310413,
+          "070002"
+        ],
+        [
+          3309931,
+          "0affffff0700"
+        ],
+        [
+          3309937,
+          "30ffe600"
+        ]
+      ]
+    }
   },
   {
     "chapter": 6,
@@ -417,7 +1647,37 @@
     "start": 1168672,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 8,
+      "address": 3310418,
+      "guards": [
+        [
+          444274,
+          "fa82b2"
+        ],
+        [
+          3310330,
+          "0483"
+        ],
+        [
+          3310340,
+          "0b1b8323832b8333833b83438348834d83528357835c83"
+        ],
+        [
+          3310418,
+          "080002"
+        ],
+        [
+          3309941,
+          "0affffff0800"
+        ],
+        [
+          3309947,
+          "30ffe700"
+        ]
+      ]
+    }
   },
   {
     "chapter": 6,
@@ -427,7 +1687,37 @@
     "start": 1168705,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 10,
+      "address": 3310428,
+      "guards": [
+        [
+          444274,
+          "fa82b2"
+        ],
+        [
+          3310330,
+          "0483"
+        ],
+        [
+          3310340,
+          "0b1b8323832b8333833b83438348834d83528357835c83"
+        ],
+        [
+          3310428,
+          "0a0002"
+        ],
+        [
+          3309961,
+          "0affffff0a00"
+        ],
+        [
+          3309967,
+          "30ffe900"
+        ]
+      ]
+    }
   },
   {
     "chapter": 6,
@@ -437,7 +1727,37 @@
     "start": 1168686,
     "length": 19,
     "reward": 12,
-    "signature": "6f1388d6133b722c0415e7c53e584c50de20cb316083c243f65507a3fe7f0e9c"
+    "signature": "6f1388d6133b722c0415e7c53e584c50de20cb316083c243f65507a3fe7f0e9c",
+    "location": {
+      "id": 9,
+      "address": 3310423,
+      "guards": [
+        [
+          444274,
+          "fa82b2"
+        ],
+        [
+          3310330,
+          "0483"
+        ],
+        [
+          3310340,
+          "0b1b8323832b8333833b83438348834d83528357835c83"
+        ],
+        [
+          3310423,
+          "090002"
+        ],
+        [
+          3309951,
+          "0affffff0900"
+        ],
+        [
+          3309957,
+          "30ffe800"
+        ]
+      ]
+    }
   },
   {
     "chapter": 7,
@@ -447,7 +1767,37 @@
     "start": 3313740,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 8,
+      "address": 453681,
+      "guards": [
+        [
+          444277,
+          "d4eb86"
+        ],
+        [
+          453588,
+          "deeb"
+        ],
+        [
+          453598,
+          "0cf7ebffeb07ec0fec17ec1fec27ec2cec31ec36ec3bec40ec"
+        ],
+        [
+          453681,
+          "080002"
+        ],
+        [
+          452852,
+          "0affffff0800"
+        ],
+        [
+          452858,
+          "30ff0a01"
+        ]
+      ]
+    }
   },
   {
     "chapter": 7,
@@ -457,7 +1807,37 @@
     "start": 3313754,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 9,
+      "address": 453686,
+      "guards": [
+        [
+          444277,
+          "d4eb86"
+        ],
+        [
+          453588,
+          "deeb"
+        ],
+        [
+          453598,
+          "0cf7ebffeb07ec0fec17ec1fec27ec2cec31ec36ec3bec40ec"
+        ],
+        [
+          453686,
+          "090002"
+        ],
+        [
+          452862,
+          "0affffff0900"
+        ],
+        [
+          452868,
+          "30ff0b01"
+        ]
+      ]
+    }
   },
   {
     "chapter": 7,
@@ -467,7 +1847,37 @@
     "start": 3313768,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 10,
+      "address": 453691,
+      "guards": [
+        [
+          444277,
+          "d4eb86"
+        ],
+        [
+          453588,
+          "deeb"
+        ],
+        [
+          453598,
+          "0cf7ebffeb07ec0fec17ec1fec27ec2cec31ec36ec3bec40ec"
+        ],
+        [
+          453691,
+          "0a0002"
+        ],
+        [
+          452872,
+          "0affffff0a00"
+        ],
+        [
+          452878,
+          "30ff0c01"
+        ]
+      ]
+    }
   },
   {
     "chapter": 7,
@@ -477,7 +1887,37 @@
     "start": 3313726,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 7,
+      "address": 453676,
+      "guards": [
+        [
+          444277,
+          "d4eb86"
+        ],
+        [
+          453588,
+          "deeb"
+        ],
+        [
+          453598,
+          "0cf7ebffeb07ec0fec17ec1fec27ec2cec31ec36ec3bec40ec"
+        ],
+        [
+          453676,
+          "070002"
+        ],
+        [
+          452842,
+          "0affffff0700"
+        ],
+        [
+          452848,
+          "30ff0901"
+        ]
+      ]
+    }
   },
   {
     "chapter": 7,
@@ -487,7 +1927,37 @@
     "start": 3313978,
     "length": 31,
     "reward": 15,
-    "signature": "fe655da70f95409f6ad6c9affefe9015940a5cd82b73302683122d45a92635c5"
+    "signature": "fe655da70f95409f6ad6c9affefe9015940a5cd82b73302683122d45a92635c5",
+    "location": {
+      "id": 7,
+      "address": 453676,
+      "guards": [
+        [
+          444277,
+          "d4eb86"
+        ],
+        [
+          453588,
+          "deeb"
+        ],
+        [
+          453598,
+          "0cf7ebffeb07ec0fec17ec1fec27ec2cec31ec36ec3bec40ec"
+        ],
+        [
+          453676,
+          "070002"
+        ],
+        [
+          452822,
+          "0aff2f000700"
+        ],
+        [
+          452828,
+          "30ff2101"
+        ]
+      ]
+    }
   },
   {
     "chapter": 7,
@@ -497,7 +1967,37 @@
     "start": 3313782,
     "length": 19,
     "reward": 12,
-    "signature": "6f1388d6133b722c0415e7c53e584c50de20cb316083c243f65507a3fe7f0e9c"
+    "signature": "6f1388d6133b722c0415e7c53e584c50de20cb316083c243f65507a3fe7f0e9c",
+    "location": {
+      "id": 11,
+      "address": 453696,
+      "guards": [
+        [
+          444277,
+          "d4eb86"
+        ],
+        [
+          453588,
+          "deeb"
+        ],
+        [
+          453598,
+          "0cf7ebffeb07ec0fec17ec1fec27ec2cec31ec36ec3bec40ec"
+        ],
+        [
+          453696,
+          "0b0002"
+        ],
+        [
+          452882,
+          "0affffff0b00"
+        ],
+        [
+          452888,
+          "30ff0d01"
+        ]
+      ]
+    }
   },
   {
     "chapter": 7,
@@ -507,7 +2007,37 @@
     "start": 3313707,
     "length": 19,
     "reward": 12,
-    "signature": "6f1388d6133b722c0415e7c53e584c50de20cb316083c243f65507a3fe7f0e9c"
+    "signature": "6f1388d6133b722c0415e7c53e584c50de20cb316083c243f65507a3fe7f0e9c",
+    "location": {
+      "id": 6,
+      "address": 453671,
+      "guards": [
+        [
+          444277,
+          "d4eb86"
+        ],
+        [
+          453588,
+          "deeb"
+        ],
+        [
+          453598,
+          "0cf7ebffeb07ec0fec17ec1fec27ec2cec31ec36ec3bec40ec"
+        ],
+        [
+          453671,
+          "060002"
+        ],
+        [
+          452832,
+          "0affffff0600"
+        ],
+        [
+          452838,
+          "30ff0801"
+        ]
+      ]
+    }
   },
   {
     "chapter": 8,
@@ -517,7 +2047,37 @@
     "start": 1032001,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 5,
+      "address": 455470,
+      "guards": [
+        [
+          444280,
+          "e5f286"
+        ],
+        [
+          455397,
+          "eff2"
+        ],
+        [
+          455407,
+          "0b06f30ef316f31ef326f32ef333f338f33df342f347f3"
+        ],
+        [
+          455470,
+          "050002"
+        ],
+        [
+          454686,
+          "0affffff0500"
+        ],
+        [
+          454692,
+          "30ff3301"
+        ]
+      ]
+    }
   },
   {
     "chapter": 8,
@@ -527,7 +2087,37 @@
     "start": 1032034,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 7,
+      "address": 455480,
+      "guards": [
+        [
+          444280,
+          "e5f286"
+        ],
+        [
+          455397,
+          "eff2"
+        ],
+        [
+          455407,
+          "0b06f30ef316f31ef326f32ef333f338f33df342f347f3"
+        ],
+        [
+          455480,
+          "070002"
+        ],
+        [
+          454706,
+          "0affffff0700"
+        ],
+        [
+          454712,
+          "30ff3501"
+        ]
+      ]
+    }
   },
   {
     "chapter": 8,
@@ -537,7 +2127,37 @@
     "start": 1032048,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 8,
+      "address": 455485,
+      "guards": [
+        [
+          444280,
+          "e5f286"
+        ],
+        [
+          455397,
+          "eff2"
+        ],
+        [
+          455407,
+          "0b06f30ef316f31ef326f32ef333f338f33df342f347f3"
+        ],
+        [
+          455485,
+          "080002"
+        ],
+        [
+          454716,
+          "0affffff0800"
+        ],
+        [
+          454722,
+          "30ff3601"
+        ]
+      ]
+    }
   },
   {
     "chapter": 8,
@@ -547,7 +2167,37 @@
     "start": 1032289,
     "length": 31,
     "reward": 12,
-    "signature": "f40b47a945129ed1fd003295a2c3e7f1476bd14cb8c134b60e4e3d698fb4a32c"
+    "signature": "f40b47a945129ed1fd003295a2c3e7f1476bd14cb8c134b60e4e3d698fb4a32c",
+    "location": {
+      "id": 8,
+      "address": 455485,
+      "guards": [
+        [
+          444280,
+          "e5f286"
+        ],
+        [
+          455397,
+          "eff2"
+        ],
+        [
+          455407,
+          "0b06f30ef316f31ef326f32ef333f338f33df342f347f3"
+        ],
+        [
+          455485,
+          "080002"
+        ],
+        [
+          454676,
+          "0aff1c000800"
+        ],
+        [
+          454682,
+          "30ff4201"
+        ]
+      ]
+    }
   },
   {
     "chapter": 8,
@@ -557,7 +2207,37 @@
     "start": 1032062,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 9,
+      "address": 455490,
+      "guards": [
+        [
+          444280,
+          "e5f286"
+        ],
+        [
+          455397,
+          "eff2"
+        ],
+        [
+          455407,
+          "0b06f30ef316f31ef326f32ef333f338f33df342f347f3"
+        ],
+        [
+          455490,
+          "090002"
+        ],
+        [
+          454726,
+          "0affffff0900"
+        ],
+        [
+          454732,
+          "30ff3701"
+        ]
+      ]
+    }
   },
   {
     "chapter": 8,
@@ -567,7 +2247,37 @@
     "start": 1032015,
     "length": 19,
     "reward": 12,
-    "signature": "6f1388d6133b722c0415e7c53e584c50de20cb316083c243f65507a3fe7f0e9c"
+    "signature": "6f1388d6133b722c0415e7c53e584c50de20cb316083c243f65507a3fe7f0e9c",
+    "location": {
+      "id": 6,
+      "address": 455475,
+      "guards": [
+        [
+          444280,
+          "e5f286"
+        ],
+        [
+          455397,
+          "eff2"
+        ],
+        [
+          455407,
+          "0b06f30ef316f31ef326f32ef333f338f33df342f347f3"
+        ],
+        [
+          455475,
+          "060002"
+        ],
+        [
+          454696,
+          "0affffff0600"
+        ],
+        [
+          454702,
+          "30ff3401"
+        ]
+      ]
+    }
   },
   {
     "chapter": 8,
@@ -577,7 +2287,37 @@
     "start": 1032076,
     "length": 19,
     "reward": 0,
-    "signature": "0e699ef763537c20926136ef039af06e18211a8ff5a4f058b20b8854128082fe"
+    "signature": "0e699ef763537c20926136ef039af06e18211a8ff5a4f058b20b8854128082fe",
+    "location": {
+      "id": 10,
+      "address": 455495,
+      "guards": [
+        [
+          444280,
+          "e5f286"
+        ],
+        [
+          455397,
+          "eff2"
+        ],
+        [
+          455407,
+          "0b06f30ef316f31ef326f32ef333f338f33df342f347f3"
+        ],
+        [
+          455495,
+          "0a0002"
+        ],
+        [
+          454736,
+          "0affffff0a00"
+        ],
+        [
+          454742,
+          "30ff3801"
+        ]
+      ]
+    }
   },
   {
     "chapter": 9,
@@ -587,7 +2327,37 @@
     "start": 3267708,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 5,
+      "address": 456888,
+      "guards": [
+        [
+          444283,
+          "6ff886"
+        ],
+        [
+          456815,
+          "79f8"
+        ],
+        [
+          456825,
+          "0b90f898f8a0f8a8f8b0f8b8f8bdf8c2f8c7f8ccf8d1f8"
+        ],
+        [
+          456888,
+          "050002"
+        ],
+        [
+          456267,
+          "0affffff0500"
+        ],
+        [
+          456273,
+          "30ff5b01"
+        ]
+      ]
+    }
   },
   {
     "chapter": 9,
@@ -597,7 +2367,37 @@
     "start": 3267722,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 6,
+      "address": 456893,
+      "guards": [
+        [
+          444283,
+          "6ff886"
+        ],
+        [
+          456815,
+          "79f8"
+        ],
+        [
+          456825,
+          "0b90f898f8a0f8a8f8b0f8b8f8bdf8c2f8c7f8ccf8d1f8"
+        ],
+        [
+          456893,
+          "060002"
+        ],
+        [
+          456277,
+          "0affffff0600"
+        ],
+        [
+          456283,
+          "30ff5c01"
+        ]
+      ]
+    }
   },
   {
     "chapter": 9,
@@ -607,7 +2407,37 @@
     "start": 3267736,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 7,
+      "address": 456898,
+      "guards": [
+        [
+          444283,
+          "6ff886"
+        ],
+        [
+          456815,
+          "79f8"
+        ],
+        [
+          456825,
+          "0b90f898f8a0f8a8f8b0f8b8f8bdf8c2f8c7f8ccf8d1f8"
+        ],
+        [
+          456898,
+          "070002"
+        ],
+        [
+          456287,
+          "0affffff0700"
+        ],
+        [
+          456293,
+          "30ff5d01"
+        ]
+      ]
+    }
   },
   {
     "chapter": 9,
@@ -617,7 +2447,37 @@
     "start": 3267750,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 8,
+      "address": 456903,
+      "guards": [
+        [
+          444283,
+          "6ff886"
+        ],
+        [
+          456815,
+          "79f8"
+        ],
+        [
+          456825,
+          "0b90f898f8a0f8a8f8b0f8b8f8bdf8c2f8c7f8ccf8d1f8"
+        ],
+        [
+          456903,
+          "080002"
+        ],
+        [
+          456297,
+          "0affffff0800"
+        ],
+        [
+          456303,
+          "30ff5e01"
+        ]
+      ]
+    }
   },
   {
     "chapter": 9,
@@ -627,7 +2487,37 @@
     "start": 3267839,
     "length": 27,
     "reward": 12,
-    "signature": "7f728ce0dd4261e62baa24749a0d3d1338b61735c02da4524ab812913df47803"
+    "signature": "7f728ce0dd4261e62baa24749a0d3d1338b61735c02da4524ab812913df47803",
+    "location": {
+      "id": 8,
+      "address": 456903,
+      "guards": [
+        [
+          444283,
+          "6ff886"
+        ],
+        [
+          456815,
+          "79f8"
+        ],
+        [
+          456825,
+          "0b90f898f8a0f8a8f8b0f8b8f8bdf8c2f8c7f8ccf8d1f8"
+        ],
+        [
+          456903,
+          "080002"
+        ],
+        [
+          456247,
+          "0aff2d000800"
+        ],
+        [
+          456253,
+          "30ff6601"
+        ]
+      ]
+    }
   },
   {
     "chapter": 9,
@@ -637,7 +2527,37 @@
     "start": 3267783,
     "length": 35,
     "reward": null,
-    "signature": "05d027a05b59f7e197ce5ff6fae03771118db59a6decafef10a5be7d4fe9c105"
+    "signature": "05d027a05b59f7e197ce5ff6fae03771118db59a6decafef10a5be7d4fe9c105",
+    "location": {
+      "id": 10,
+      "address": 456913,
+      "guards": [
+        [
+          444283,
+          "6ff886"
+        ],
+        [
+          456815,
+          "79f8"
+        ],
+        [
+          456825,
+          "0b90f898f8a0f8a8f8b0f8b8f8bdf8c2f8c7f8ccf8d1f8"
+        ],
+        [
+          456913,
+          "0a0002"
+        ],
+        [
+          456317,
+          "0affffff0a00"
+        ],
+        [
+          456323,
+          "30ff6001"
+        ]
+      ]
+    }
   },
   {
     "chapter": 9,
@@ -647,7 +2567,37 @@
     "start": 3267764,
     "length": 19,
     "reward": 12,
-    "signature": "6f1388d6133b722c0415e7c53e584c50de20cb316083c243f65507a3fe7f0e9c"
+    "signature": "6f1388d6133b722c0415e7c53e584c50de20cb316083c243f65507a3fe7f0e9c",
+    "location": {
+      "id": 9,
+      "address": 456908,
+      "guards": [
+        [
+          444283,
+          "6ff886"
+        ],
+        [
+          456815,
+          "79f8"
+        ],
+        [
+          456825,
+          "0b90f898f8a0f8a8f8b0f8b8f8bdf8c2f8c7f8ccf8d1f8"
+        ],
+        [
+          456908,
+          "090002"
+        ],
+        [
+          456307,
+          "0affffff0900"
+        ],
+        [
+          456313,
+          "30ff5f01"
+        ]
+      ]
+    }
   },
   {
     "chapter": 10,
@@ -657,7 +2607,37 @@
     "start": 888118,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 5,
+      "address": 3179384,
+      "guards": [
+        [
+          444286,
+          "2f83b0"
+        ],
+        [
+          3179311,
+          "3983"
+        ],
+        [
+          3179321,
+          "0b5083588360836883708378837d83828387838c839183"
+        ],
+        [
+          3179384,
+          "050002"
+        ],
+        [
+          3178919,
+          "0affffff0500"
+        ],
+        [
+          3178925,
+          "30ff7e01"
+        ]
+      ]
+    }
   },
   {
     "chapter": 10,
@@ -667,7 +2647,37 @@
     "start": 888132,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 6,
+      "address": 3179389,
+      "guards": [
+        [
+          444286,
+          "2f83b0"
+        ],
+        [
+          3179311,
+          "3983"
+        ],
+        [
+          3179321,
+          "0b5083588360836883708378837d83828387838c839183"
+        ],
+        [
+          3179389,
+          "060002"
+        ],
+        [
+          3178929,
+          "0affffff0600"
+        ],
+        [
+          3178935,
+          "30ff7f01"
+        ]
+      ]
+    }
   },
   {
     "chapter": 10,
@@ -677,7 +2687,37 @@
     "start": 888146,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 7,
+      "address": 3179394,
+      "guards": [
+        [
+          444286,
+          "2f83b0"
+        ],
+        [
+          3179311,
+          "3983"
+        ],
+        [
+          3179321,
+          "0b5083588360836883708378837d83828387838c839183"
+        ],
+        [
+          3179394,
+          "070002"
+        ],
+        [
+          3178939,
+          "0affffff0700"
+        ],
+        [
+          3178945,
+          "30ff8001"
+        ]
+      ]
+    }
   },
   {
     "chapter": 10,
@@ -687,7 +2727,37 @@
     "start": 888179,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 9,
+      "address": 3179404,
+      "guards": [
+        [
+          444286,
+          "2f83b0"
+        ],
+        [
+          3179311,
+          "3983"
+        ],
+        [
+          3179321,
+          "0b5083588360836883708378837d83828387838c839183"
+        ],
+        [
+          3179404,
+          "090002"
+        ],
+        [
+          3178959,
+          "0affffff0900"
+        ],
+        [
+          3178965,
+          "30ff8201"
+        ]
+      ]
+    }
   },
   {
     "chapter": 10,
@@ -697,7 +2767,37 @@
     "start": 888193,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 10,
+      "address": 3179409,
+      "guards": [
+        [
+          444286,
+          "2f83b0"
+        ],
+        [
+          3179311,
+          "3983"
+        ],
+        [
+          3179321,
+          "0b5083588360836883708378837d83828387838c839183"
+        ],
+        [
+          3179409,
+          "0a0002"
+        ],
+        [
+          3178969,
+          "0affffff0a00"
+        ],
+        [
+          3178975,
+          "30ff8301"
+        ]
+      ]
+    }
   },
   {
     "chapter": 10,
@@ -707,7 +2807,37 @@
     "start": 888160,
     "length": 19,
     "reward": 12,
-    "signature": "6f1388d6133b722c0415e7c53e584c50de20cb316083c243f65507a3fe7f0e9c"
+    "signature": "6f1388d6133b722c0415e7c53e584c50de20cb316083c243f65507a3fe7f0e9c",
+    "location": {
+      "id": 8,
+      "address": 3179399,
+      "guards": [
+        [
+          444286,
+          "2f83b0"
+        ],
+        [
+          3179311,
+          "3983"
+        ],
+        [
+          3179321,
+          "0b5083588360836883708378837d83828387838c839183"
+        ],
+        [
+          3179399,
+          "080002"
+        ],
+        [
+          3178949,
+          "0affffff0800"
+        ],
+        [
+          3178955,
+          "30ff8101"
+        ]
+      ]
+    }
   },
   {
     "chapter": 11,
@@ -717,7 +2847,37 @@
     "start": 3270566,
     "length": 26,
     "reward": null,
-    "signature": "8a0cf465d5249c782304ebf6d0bd87cd7fed7285834c5e3317aa0b6d3a97751d"
+    "signature": "8a0cf465d5249c782304ebf6d0bd87cd7fed7285834c5e3317aa0b6d3a97751d",
+    "location": {
+      "id": 6,
+      "address": 3254764,
+      "guards": [
+        [
+          444289,
+          "a1a9b1"
+        ],
+        [
+          3254689,
+          "aba9"
+        ],
+        [
+          3254699,
+          "08bca9c4a9cca9d4a9dca9e4a9eca9f1a9"
+        ],
+        [
+          3254764,
+          "060002"
+        ],
+        [
+          3254158,
+          "0affffff0600"
+        ],
+        [
+          3254164,
+          "30ff9d01"
+        ]
+      ]
+    }
   },
   {
     "chapter": 11,
@@ -727,7 +2887,37 @@
     "start": 3270592,
     "length": 26,
     "reward": null,
-    "signature": "e5996c146d1285a911af6ad71a834e823e2d9aa884e917f9909b9ef203a61a20"
+    "signature": "e5996c146d1285a911af6ad71a834e823e2d9aa884e917f9909b9ef203a61a20",
+    "location": {
+      "id": 7,
+      "address": 3254769,
+      "guards": [
+        [
+          444289,
+          "a1a9b1"
+        ],
+        [
+          3254689,
+          "aba9"
+        ],
+        [
+          3254699,
+          "08bca9c4a9cca9d4a9dca9e4a9eca9f1a9"
+        ],
+        [
+          3254769,
+          "070002"
+        ],
+        [
+          3254168,
+          "0affffff0700"
+        ],
+        [
+          3254174,
+          "30ff9e01"
+        ]
+      ]
+    }
   },
   {
     "chapter": 0,
@@ -737,7 +2927,37 @@
     "start": 3245551,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 3,
+      "address": 1081874,
+      "guards": [
+        [
+          444256,
+          "df8190"
+        ],
+        [
+          1081823,
+          "e981"
+        ],
+        [
+          1081833,
+          "08fa8102820a82128217821c8221822682"
+        ],
+        [
+          1081874,
+          "030002"
+        ],
+        [
+          1081560,
+          "0affffff0300"
+        ],
+        [
+          1081566,
+          "30ff1400"
+        ]
+      ]
+    }
   },
   {
     "chapter": 0,
@@ -747,7 +2967,37 @@
     "start": 3245565,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 4,
+      "address": 1081879,
+      "guards": [
+        [
+          444256,
+          "df8190"
+        ],
+        [
+          1081823,
+          "e981"
+        ],
+        [
+          1081833,
+          "08fa8102820a82128217821c8221822682"
+        ],
+        [
+          1081879,
+          "040002"
+        ],
+        [
+          1081570,
+          "0affffff0400"
+        ],
+        [
+          1081576,
+          "30ff1500"
+        ]
+      ]
+    }
   },
   {
     "chapter": 0,
@@ -757,7 +3007,37 @@
     "start": 3245593,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 5,
+      "address": 1081884,
+      "guards": [
+        [
+          444256,
+          "df8190"
+        ],
+        [
+          1081823,
+          "e981"
+        ],
+        [
+          1081833,
+          "08fa8102820a82128217821c8221822682"
+        ],
+        [
+          1081884,
+          "050002"
+        ],
+        [
+          1081580,
+          "0affffff0500"
+        ],
+        [
+          1081586,
+          "30ff1700"
+        ]
+      ]
+    }
   },
   {
     "chapter": 0,
@@ -767,7 +3047,37 @@
     "start": 3245579,
     "length": 14,
     "reward": null,
-    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182"
+    "signature": "02c8c6a5b1c808d30b6b55544e98826a281e3c73c88b35416bf3f7df882c2182",
+    "location": {
+      "id": 6,
+      "address": 1081889,
+      "guards": [
+        [
+          444256,
+          "df8190"
+        ],
+        [
+          1081823,
+          "e981"
+        ],
+        [
+          1081833,
+          "08fa8102820a82128217821c8221822682"
+        ],
+        [
+          1081889,
+          "060002"
+        ],
+        [
+          1081590,
+          "0affffff0600"
+        ],
+        [
+          1081596,
+          "30ff1600"
+        ]
+      ]
+    }
   },
   {
     "chapter": 0,
@@ -777,6 +3087,36 @@
     "start": 3245607,
     "length": 19,
     "reward": 0,
-    "signature": "0e699ef763537c20926136ef039af06e18211a8ff5a4f058b20b8854128082fe"
+    "signature": "0e699ef763537c20926136ef039af06e18211a8ff5a4f058b20b8854128082fe",
+    "location": {
+      "id": 7,
+      "address": 1081894,
+      "guards": [
+        [
+          444256,
+          "df8190"
+        ],
+        [
+          1081823,
+          "e981"
+        ],
+        [
+          1081833,
+          "08fa8102820a82128217821c8221822682"
+        ],
+        [
+          1081894,
+          "070002"
+        ],
+        [
+          1081600,
+          "0affffff0700"
+        ],
+        [
+          1081606,
+          "30ff1800"
+        ]
+      ]
+    }
   }
 ]

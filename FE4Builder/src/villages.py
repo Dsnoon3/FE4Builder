@@ -18,7 +18,44 @@ def entries():return json.loads((DATA_DIR/'villages.json').read_text(encoding='u
 
 def slot(index):return ARENA+0x8000+index*SLOT
 def digest(block):return hashlib.sha256(block[:64]+block[96:]).digest()
-def fingerprint():return hashlib.sha256(json.dumps(entries(),sort_keys=True).encode()).digest()[:16]
+def fingerprint():return hashlib.sha256(json.dumps([{k:v for k,v in e.items() if k!='location'} for e in entries()],sort_keys=True).encode()).digest()[:16]
+
+
+class VillageLocation:
+    """Fixed-size interaction coordinates shared by a village's reward variants."""
+    def __init__(self,rom,index):
+        self.rom,self.index=rom,index
+        self.entry=entries()[index];self.location=self.entry.get('location')
+        if not self.location:raise ValueError('This village has no verified location link.')
+        for address,raw in self.location['guards']:
+            if bytes(rom.data[address+rom.header:address+rom.header+len(raw)//2])!=bytes.fromhex(raw):
+                raise ValueError('Village location tables or visit conditions changed. Location editing is unavailable for this layout.')
+        self.address=self.location['address'];at=self.address+rom.header
+        self.position=tuple(rom.data[at+3:at+5])
+        if len(self.position)!=2 or any(v>=64 for v in self.position):raise ValueError('Invalid village coordinates.')
+        self.variants=[e['label'] for e in entries() if e['chapter']==self.entry['chapter'] and e.get('location',{}).get('address')==self.address]
+
+    def validate(self,x,y):
+        if any(type(v) is not int or not 0<=v<64 for v in (x,y)):raise ValueError('Choose a tile inside the 64 × 64 map.')
+        from chapter_maps import MAP_HEADERS
+        at=MAP_HEADERS+self.entry['chapter']*3+self.rom.header
+        header=pc_address(int.from_bytes(self.rom.data[at:at+3],'little'))+self.rom.header
+        left,top,right,bottom=[int.from_bytes(self.rom.data[header+i:header+i+2],'little')//16 for i in (16,18,20,22)]
+        if not left<=x<right or not top<=y<bottom:raise ValueError('Choose a tile inside the chapter’s playable map bounds.')
+        table=self.location['guards'][2][0]+self.rom.header
+        bank=int.from_bytes(bytes.fromhex(self.location['guards'][0][1]),'little')&0xff0000
+        for i in range(self.rom.data[table]):
+            at=pc_address(bank|int.from_bytes(self.rom.data[table+1+i*2:table+3+i*2],'little'))
+            if at!=self.address and tuple(self.rom.data[at+self.rom.header+3:at+self.rom.header+5])==(x,y):
+                raise ValueError('Another village or castle already occupies this interaction tile.')
+
+    def write(self,x,y):
+        current=VillageLocation(self.rom,self.index)
+        if current.position!=self.position:raise ValueError('Village location changed while this editor was open. Reload before writing.')
+        if (x,y)==self.position:return []
+        self.validate(x,y)
+        at=self.address+self.rom.header+3;self.rom.data[at:at+2]=bytes((x,y))
+        return [f'Village location {self.location["id"]}: {self.position} → {(x,y)}; shared reward variants remain linked.']
 
 
 def pool(rom,create=False):
@@ -37,7 +74,7 @@ def active_metadata(rom,index):
     if meta[:4]!=b'VLG1' or int.from_bytes(meta[4:6],'little')!=index:
         raise ValueError('Village script metadata is invalid.')
     length=int.from_bytes(meta[10:12],'little')
-    if meta[6] not in (0,5,6,11) or meta[7]>1 or int.from_bytes(meta[8:10],'little')!=entries()[index]['length'] or not 2<=length<=SLOT-32:
+    if meta[6] not in (0,5,6,10,11,16) or meta[7]>1 or meta[17] not in (0,1) or (meta[17]==1 and (meta[15] not in (*range(8),255) or meta[16]>30)) or int.from_bytes(meta[8:10],'little')!=entries()[index]['length'] or not 2<=length<=SLOT-32:
         raise ValueError('Village script metadata is outside its supported bounds.')
     return meta,bytes(data[at+32:at+32+length])
 
@@ -91,7 +128,7 @@ class Village:
             self.gold=int.from_bytes(meta[12:14],'little');self.item=meta[14]
             body=bytearray(payload[prefix:]);self.snapshot=payload
             if removed:
-                if self.kind!='item':raise ValueError('Only an item command can be removed by this editor.')
+                if reward is None:raise ValueError('No original reward command can be removed.')
                 body[reward:reward]=original[reward:reward+5]
             for offset,opcode,size in self.nodes:
                 if opcode in (2,3,4):
@@ -104,24 +141,39 @@ class Village:
         elif target!=e['start']:raise ValueError('Village event pointer has been relocated by another tool.')
         elif self.kind=='item':self.item=self.body[reward+4]
         if self.kind=='stat':self.stat,self.amount=self.body[reward+3:reward+5]
+        if target==slot(index)+32 and meta[17]==1:
+            self.stat=meta[15] if meta[15]<8 else None
+            self.amount=meta[16] if self.stat is not None else None
+        self.reward_type='item+stat' if self.item and self.stat is not None else 'item' if self.item else 'stat' if self.stat is not None else 'none'
         self.original_values=(self.item,self.gold,self.stat,self.amount)
 
-    def write(self,item,gold,stat=None,amount=None):
+    def write(self,item,gold,stat=None,amount=None,reward_type=None):
         if type(item) is not int or not 0<=item<=142 or type(gold) is not int or not 0<=gold<=50000:
             raise ValueError('Choose an item slot 1–142 or None; extra gold must be 0–50,000.')
-        if self.kind=='stat' and (type(stat) is not int or not 0<=stat<8 or type(amount) is not int or not 0<=amount<=30):
+        if reward_type is not None:
+            if reward_type not in ('none','item','stat','item+stat'):raise ValueError('Choose a supported reward type.')
+            if reward_type in ('none','stat'):item=0
+            if reward_type in ('none','item'):stat=amount=None
+            if reward_type in ('item','item+stat') and not item:raise ValueError('Choose an item slot for the item reward.')
+        if reward_type in ('stat','item+stat') and stat is None:raise ValueError('Choose a stat for the stat reward.')
+        if stat is not None and (type(stat) is not int or not 0<=stat<8 or type(amount) is not int or not 0<=amount<=30):
             raise ValueError('Choose a supported stat and a bonus from 0–30.')
         if (item,gold,stat,amount)==self.original_values:return []
         fresh=Village(self.rom,self.index)
         if fresh.pointer!=self.pointer or fresh.snapshot!=self.snapshot or fresh.original_values!=self.original_values:
             raise ValueError('This village changed outside the editor. Reload before writing.')
-        e=self.entry;body=bytearray(self.body);reward=e['reward'];removed=self.kind=='item' and item==0
-        if self.kind=='item' and item:body[reward+4]=item
-        elif self.kind=='stat':body[reward+3:reward+5]=bytes((stat,amount))
-        if removed:del body[reward:reward+5]
+        e=self.entry;body=bytearray(self.body);reward=e['reward'];removed=reward is not None
         prefix=bytearray()
         if gold:prefix.extend(b'\x4a\x54\xff\xff'+gold.to_bytes(2,'little'))
-        if self.kind!='item' and item:prefix.extend(b'\x4a\x57\xff\xff'+bytes([item]))
+        actor=65535
+        if reward is not None:
+            actor=int.from_bytes(body[reward+2:reward+4],'little') if self.kind=='item' else body[reward+2]
+            if self.kind=='stat' and actor==255:actor=65535
+        if item:prefix.extend(b'\x4a\x57'+actor.to_bytes(2,'little')+bytes([item]))
+        if stat is not None:
+            if actor!=65535 and actor>254:raise ValueError('This recipient cannot be represented by the stat reward command.')
+            prefix.extend(b'\x4a\x70'+bytes([255 if actor==65535 else actor,stat,amount]))
+        if removed:del body[reward:reward+5]
         def mapped(offset):return offset-(5 if removed and offset>=reward+5 else 0)
         boundaries={offset for offset,_,_ in self.nodes}
         for offset,opcode,size in self.nodes:
@@ -137,6 +189,7 @@ class Village:
         meta=bytearray(32);meta[:4]=b'VLG1';meta[4:6]=self.index.to_bytes(2,'little')
         meta[6]=len(prefix);meta[7]=removed;meta[8:10]=e['length'].to_bytes(2,'little');meta[10:12]=len(payload).to_bytes(2,'little')
         meta[12:14]=gold.to_bytes(2,'little');meta[14]=item
+        meta[15]=255 if stat is None else stat;meta[16]=amount or 0;meta[17]=1
         block[at:at+32]=meta;block[at+32:at+32+len(payload)]=payload;block[64:96]=digest(block)
         self.rom.data[ARENA+self.rom.header:ARENA+self.rom.header+SIZE]=block
         # RUN_EVENT_CONDITION uses the event's bank as DB for both ROM reads

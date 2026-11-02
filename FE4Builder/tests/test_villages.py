@@ -35,6 +35,27 @@ class VillageTests(unittest.TestCase):
             at=entry['ref'];expected[at:at+3]=self.rom.data[at:at+3]
         self.assertEqual(self.rom.data,expected)
 
+    def test_reward_type_conversion_all_villages_headers_and_dialogue(self):
+        for header in (0,512):
+            rom=Rom(next(ROOT.glob('*.sfc')))
+            if header:rom.data=bytearray(512)+rom.data;rom.header=512
+            size=len(rom.data)
+            for i,entry in enumerate(entries()):
+                original=Village(rom,i)
+                for kind in ('stat','item','item+stat','none','stat'):
+                    model=Village(rom,i)
+                    model.write(123,750,4,3,reward_type=kind)
+                    fresh=Village(rom,i)
+                    self.assertEqual(fresh.reward_type,kind)
+                    self.assertEqual(fresh.item,123 if kind in ('item','item+stat') else 0)
+                    self.assertEqual(fresh.stat,4 if kind in ('stat','item+stat') else None)
+                    self.assertEqual(fresh.recipient,original.recipient)
+                    self.assertEqual(len(rom.data),size)
+                    for offset,opcode,length in original.nodes:
+                        if opcode==0x0c:
+                            ref=resolve_dialogue_ref(rom,entry['start']+offset+1)
+                            self.assertEqual(rom.data[ref+header:ref+header+3],original.body[offset+1:offset+4])
+
     def test_dialogue_edits_before_and_after_reward_edits_follow_private_script(self):
         i=next(i for i,e in enumerate(entries()) if e['chapter']==0 and e['reward'] is not None)
         village=Village(self.rom,i);entry=village.entry
@@ -86,6 +107,28 @@ class VillageTests(unittest.TestCase):
             self.assertEqual(rom.data[:512],bytes(512))
             rom.undo();self.assertEqual(path.read_bytes(),before)
             rom.redo();self.assertEqual(Village(rom,0).item,123)
+
+    def test_gui_type_switch_and_expansion_confirmation_rollback(self):
+        from FE4Builder import App
+        app=App();app.withdraw();app.rom=self.rom
+        try:
+            window=app.edit_villages()
+            window.reward_type.set('Stat increase');window.change_reward_type()
+            self.assertEqual(str(window.stat_box['state']),'readonly')
+            window.stat.set('Speed');window.amount.set('3')
+            before=bytes(self.rom.data)
+            with patch.object(self.rom,'save_original'):
+                self.assertTrue(window.save())
+            self.assertEqual(Village(self.rom,window.current).reward_type,'stat')
+            self.assertEqual(len(self.rom.data),len(before))
+            before=bytes(self.rom.data)
+            def expand(*args,**kwargs):
+                self.rom.data.extend(bytes(16));return ['test expansion']
+            with patch.object(window.model,'write',side_effect=expand),patch('village_window.messagebox.askyesno',return_value=False) as confirm,patch.object(self.rom,'save_original') as save:
+                self.assertFalse(window.save());confirm.assert_called_once();save.assert_not_called()
+            self.assertEqual(bytes(self.rom.data),before)
+            window.destroy()
+        finally:app.destroy()
 
     def test_menu_categories_search_and_editor_save_failure(self):
         from FE4Builder import App
