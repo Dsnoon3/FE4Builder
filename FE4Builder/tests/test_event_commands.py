@@ -3,7 +3,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 from rom import ROOT,Rom
-from event_commands import catalogue,EventCommands,FIELDS,schema,character_options,audio_kind,audio_options,deployment_options,group_units,temporary_options
+from event_commands import catalogue,EventCommands,FIELDS,schema,character_options,audio_kind,audio_options,deployment_options,group_units,temporary_options,permanent_flag_options,TRANSITION_MODES,give_recipients,player_item_options
 
 class EventCommandTests(unittest.TestCase):
     def setUp(self):self.rom=Rom(next(ROOT.glob('*.sfc')))
@@ -20,6 +20,9 @@ class EventCommandTests(unittest.TestCase):
                 if c['opcode'] in (0x0c,0x14):values[0]=next(o['pointer'] for o in model.dialogues() if o['pointer']!=model.values(command)[0])
                 if c['opcode']==0x23:
                     values[0]=model.values(command)[0];values[1]=next(k for k in group_units(self.rom,values[0]) if k!=model.values(command)[1])
+                if schema(c)=='give_item':values=[next(v for v in give_recipients(self.rom) if v!=model.values(command)[0]),next(v for v in player_item_options(self.rom) if v!=model.values(command)[1])]
+                if c['opcode']==0x3b:values[1]=next(v for v in TRANSITION_MODES if v!=model.values(command)[1])
+                if schema(c)=='set_permanent_flag':values=[next(v for v in permanent_flag_options() if v!=model.values(command)[0])]
                 if c['opcode']==0x27:
                     values=[next((v for v in temporary_options(self.rom,i) if v!=old),value) if temporary_options(self.rom,i) else value for i,(old,value) in enumerate(zip(model.values(command),values))]
                 if c['opcode']==0x24:
@@ -30,7 +33,7 @@ class EventCommandTests(unittest.TestCase):
                 self.assertTrue(changed);self.assertTrue(changed<=allowed)
                 self.assertEqual(EventCommands(self.rom,index).values(command),values)
                 self.rom.data[start:start+len(baseline)]=baseline;count+=1
-        self.assertEqual(count,222);self.assertEqual(bytes(self.rom.data),original)
+        self.assertEqual(count,235);self.assertEqual(bytes(self.rom.data),original)
     def test_direct_deployment_packed_fields_and_ui(self):
         from FE4Builder import App
         original=bytes(self.rom.data)

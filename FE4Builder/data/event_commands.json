@@ -176,9 +176,17 @@
           [
             345,
             1
+          ],
+          [
+            19,
+            1
+          ],
+          [
+            338,
+            1
           ]
         ],
-        "hash": "967fbf6fca4e33812ead314cafe731a9be9b0bde290bafcd40fa4dbabd83404a"
+        "hash": "049580d22d5fcd90bf16be0865533e2ce468c11c9f2a473d1e3ce37e91777b3f"
       },
       "commands": [
         {
@@ -225,9 +233,10 @@
           "offset": 18,
           "opcode": 59,
           "size": 2,
-          "name": "EVENT_3B",
+          "name": "MAP_TRANSITION",
           "condition": null,
-          "editable": false
+          "editable": true,
+          "legacy_name": "EVENT_3B"
         },
         {
           "offset": 20,
@@ -888,9 +897,10 @@
           "offset": 337,
           "opcode": 59,
           "size": 2,
-          "name": "EVENT_3B",
+          "name": "MAP_TRANSITION",
           "condition": null,
-          "editable": false
+          "editable": true,
+          "legacy_name": "EVENT_3B"
         },
         {
           "offset": 339,
@@ -2762,9 +2772,13 @@
           [
             109,
             3
+          ],
+          [
+            79,
+            1
           ]
         ],
-        "hash": "5886e03513fed9be610bb242692844a9e06532cf4cfd843da9c75378767b9303"
+        "hash": "c2d015576222b47faf4ccde2434c48f4ad252404b81556483ba01059e7273ffe"
       },
       "commands": [
         {
@@ -2939,9 +2953,10 @@
           "offset": 78,
           "opcode": 59,
           "size": 2,
-          "name": "EVENT_3B",
+          "name": "MAP_TRANSITION",
           "condition": null,
-          "editable": false
+          "editable": true,
+          "legacy_name": "EVENT_3B"
         },
         {
           "offset": 80,
@@ -3159,9 +3174,13 @@
           [
             59,
             2
+          ],
+          [
+            12,
+            3
           ]
         ],
-        "hash": "d7329cdcd4ba0d5268ee7dd3032081a1fdb3961650d6b80059b8e2a60fe2c74f",
+        "hash": "d4d4fd6ad88d37ab3b32f853140871a35624505f2bb38d7f41252aa78fc5a125",
         "switches": []
       },
       "commands": [
@@ -3211,7 +3230,7 @@
           "size": 5,
           "name": "RUN_EVENT_CONDITION / GIVE_UNIT_PID",
           "condition": 87,
-          "editable": false
+          "editable": true
         },
         {
           "offset": 15,
@@ -3449,9 +3468,21 @@
           [
             62,
             3
+          ],
+          [
+            15,
+            2
+          ],
+          [
+            19,
+            2
+          ],
+          [
+            70,
+            1
           ]
         ],
-        "hash": "08f4b637124a29598a2c314dc8125b21bfcd97898b0897615af3d1ef256a13d7"
+        "hash": "bcf79d2a762bc2ada7044e898bceec3ac9789a8eeb4293005b0dcff40ae744ac"
       },
       "commands": [
         {
@@ -3516,7 +3547,7 @@
           "size": 4,
           "name": "RUN_EVENT_CONDITION / UNDEPLOY_UNIT",
           "condition": 102,
-          "editable": false
+          "editable": true
         },
         {
           "offset": 17,
@@ -3524,7 +3555,7 @@
           "size": 4,
           "name": "RUN_EVENT_CONDITION / UNDEPLOY_UNIT",
           "condition": 102,
-          "editable": false
+          "editable": true
         },
         {
           "offset": 21,
@@ -3652,7 +3683,7 @@
           "size": 3,
           "name": "RUN_EVENT_CONDITION / SET_PERMANENT_FLAG",
           "condition": 54,
-          "editable": false
+          "editable": true
         },
         {
           "offset": 71,
@@ -3794,9 +3825,21 @@
           [
             62,
             3
+          ],
+          [
+            15,
+            2
+          ],
+          [
+            19,
+            2
+          ],
+          [
+            70,
+            1
           ]
         ],
-        "hash": "08f4b637124a29598a2c314dc8125b21bfcd97898b0897615af3d1ef256a13d7"
+        "hash": "bcf79d2a762bc2ada7044e898bceec3ac9789a8eeb4293005b0dcff40ae744ac"
       },
       "commands": [
         {
@@ -3861,7 +3904,7 @@
           "size": 4,
           "name": "RUN_EVENT_CONDITION / UNDEPLOY_UNIT",
           "condition": 102,
-          "editable": false
+          "editable": true
         },
         {
           "offset": 17,
@@ -3869,7 +3912,7 @@
           "size": 4,
           "name": "RUN_EVENT_CONDITION / UNDEPLOY_UNIT",
           "condition": 102,
-          "editable": false
+          "editable": true
         },
         {
           "offset": 21,
@@ -3997,7 +4040,7 @@
           "size": 3,
           "name": "RUN_EVENT_CONDITION / SET_PERMANENT_FLAG",
           "condition": 54,
-          "editable": false
+          "editable": true
         },
         {
           "offset": 71,
@@ -4127,9 +4170,21 @@
           [
             44,
             3
+          ],
+          [
+            15,
+            2
+          ],
+          [
+            52,
+            1
+          ],
+          [
+            25,
+            1
           ]
         ],
-        "hash": "fd867ce8ab8ffe775d25b3660b0fdf81a6cb9e4ed50097f0ddf774b1d28ddabc"
+        "hash": "ee707974dd1fa33c1fb3c8e0413f302014f708d475c291f56e844a1267cf99e9"
       },
       "commands": [
         {
@@ -4194,7 +4249,7 @@
           "size": 4,
           "name": "RUN_EVENT_CONDITION / UNDEPLOY_UNIT",
           "condition": 102,
-          "editable": false
+          "editable": true
         },
         {
           "offset": 17,
@@ -4224,9 +4279,10 @@
           "offset": 24,
           "opcode": 59,
           "size": 2,
-          "name": "EVENT_3B",
+          "name": "MAP_TRANSITION",
           "condition": null,
-          "editable": false
+          "editable": true,
+          "legacy_name": "EVENT_3B"
         },
         {
           "offset": 26,
@@ -4314,7 +4370,7 @@
           "size": 3,
           "name": "RUN_EVENT_CONDITION / SET_PERMANENT_FLAG",
           "condition": 54,
-          "editable": false
+          "editable": true
         },
         {
           "offset": 53,
@@ -5545,9 +5601,17 @@
         [
           345,
           1
+        ],
+        [
+          19,
+          1
+        ],
+        [
+          338,
+          1
         ]
       ],
-      "hash": "967fbf6fca4e33812ead314cafe731a9be9b0bde290bafcd40fa4dbabd83404a"
+      "hash": "049580d22d5fcd90bf16be0865533e2ce468c11c9f2a473d1e3ce37e91777b3f"
     },
     {
       "start": 3244770,
@@ -6064,9 +6128,13 @@
         [
           109,
           3
+        ],
+        [
+          79,
+          1
         ]
       ],
-      "hash": "5886e03513fed9be610bb242692844a9e06532cf4cfd843da9c75378767b9303"
+      "hash": "c2d015576222b47faf4ccde2434c48f4ad252404b81556483ba01059e7273ffe"
     },
     {
       "start": 3245485,
@@ -6103,9 +6171,13 @@
         [
           59,
           2
+        ],
+        [
+          12,
+          3
         ]
       ],
-      "hash": "d7329cdcd4ba0d5268ee7dd3032081a1fdb3961650d6b80059b8e2a60fe2c74f",
+      "hash": "d4d4fd6ad88d37ab3b32f853140871a35624505f2bb38d7f41252aa78fc5a125",
       "switches": []
     },
     {
@@ -6179,9 +6251,21 @@
         [
           62,
           3
+        ],
+        [
+          15,
+          2
+        ],
+        [
+          19,
+          2
+        ],
+        [
+          70,
+          1
         ]
       ],
-      "hash": "08f4b637124a29598a2c314dc8125b21bfcd97898b0897615af3d1ef256a13d7"
+      "hash": "bcf79d2a762bc2ada7044e898bceec3ac9789a8eeb4293005b0dcff40ae744ac"
     },
     {
       "start": 3245739,
@@ -6254,9 +6338,21 @@
         [
           62,
           3
+        ],
+        [
+          15,
+          2
+        ],
+        [
+          19,
+          2
+        ],
+        [
+          70,
+          1
         ]
       ],
-      "hash": "08f4b637124a29598a2c314dc8125b21bfcd97898b0897615af3d1ef256a13d7"
+      "hash": "bcf79d2a762bc2ada7044e898bceec3ac9789a8eeb4293005b0dcff40ae744ac"
     },
     {
       "start": 3245852,
@@ -6317,9 +6413,21 @@
         [
           44,
           3
+        ],
+        [
+          15,
+          2
+        ],
+        [
+          52,
+          1
+        ],
+        [
+          25,
+          1
         ]
       ],
-      "hash": "fd867ce8ab8ffe775d25b3660b0fdf81a6cb9e4ed50097f0ddf774b1d28ddabc"
+      "hash": "ee707974dd1fa33c1fb3c8e0413f302014f708d475c291f56e844a1267cf99e9"
     },
     {
       "start": 3340238,
@@ -6585,5 +6693,96 @@
       "23": "Bridge Raised",
       "22": "Bridge Lowered"
     }
+  },
+  "permanent_flags": {
+    "0": "Seliph Exists",
+    "1": "Quan Ethlyn Died",
+    "2": "Finn Died",
+    "4": "Deirdre Lover Home Castle",
+    "5": "Ethlyn Lover Home Castle",
+    "6": "Lachesis Lover Home Castle",
+    "7": "Ayra Lover Home Castle",
+    "8": "Erinys Lover Home Castle",
+    "9": "Tailtiu Lover Home Castle",
+    "10": "Silvia Lover Home Castle",
+    "11": "Edain Lover Home Castle",
+    "12": "Brigid Lover Home Castle",
+    "13": "Daisy Patty Lover Home Castle",
+    "14": "Creidne Larcei Lover Home Castle",
+    "15": "Muirne Lana Lover Home Castle",
+    "16": "Julia Lover Home Castle",
+    "17": "Altena Lover Home Castle",
+    "18": "Hermina Fee Lover Home Castle",
+    "19": "Linda Tine Lover Home Castle",
+    "20": "Laylea Lene Lover Home Castle",
+    "21": "Jeanne Nanna Lover Home Castle",
+    "22": "Scathach Exists",
+    "23": "Febail Exists",
+    "24": "Coirpre Exists",
+    "25": "Ced Exists",
+    "26": "Diarmuid Exists",
+    "27": "Lester Exists",
+    "28": "Arthur Exists",
+    "29": "Patty Exists",
+    "30": "Larcei Exists",
+    "31": "Lana Exists",
+    "32": "Fee Exists",
+    "33": "Tine Exists",
+    "34": "Lene Exists",
+    "35": "Nanna Exists",
+    "36": "36",
+    "37": "Altena Died",
+    "39": "Oifey Tactician Gone",
+    "40": "Lewyn Tactician Arrived",
+    "41": "Sigurd Recruited",
+    "42": "Naoise Recruited",
+    "43": "Alec Recruited",
+    "44": "Arden Recruited",
+    "45": "Finn Recruited",
+    "46": "Quan Recruited",
+    "47": "Midir Recruited",
+    "48": "Lewyn Recruited",
+    "49": "Chulainn Recruited",
+    "50": "Azelle Recruited",
+    "51": "Jamke Recruited",
+    "52": "Claud Recruited",
+    "53": "Beowulf Recruited",
+    "54": "Lex Recruited",
+    "55": "Dew Recruited",
+    "56": "Deirdre Recruited",
+    "57": "Ethlyn Recruited",
+    "58": "Lachesis Recruited",
+    "59": "Ayra Recruited",
+    "60": "Erinys Recruited",
+    "61": "Tailtiu Recruited",
+    "62": "Silvia Recruited",
+    "63": "Edain Recruited",
+    "64": "Brigid Recruited",
+    "65": "Sigurd Lived",
+    "66": "Naoise Lived",
+    "67": "Alec Lived",
+    "68": "Arden Lived",
+    "69": "Finn Lived",
+    "70": "Quan Lived",
+    "71": "Midir Lived",
+    "72": "Lewyn Lived",
+    "73": "Chulainn Lived",
+    "74": "Azelle Lived",
+    "75": "Jamke Lived",
+    "76": "Claud Lived",
+    "77": "Beowulf Lived",
+    "78": "Lex Lived",
+    "79": "Dew Lived",
+    "80": "Deirdre Lived",
+    "81": "Ethlyn Lived",
+    "82": "Lachesis Lived",
+    "83": "Ayra Lived",
+    "84": "Erinys Lived",
+    "85": "Tailtiu Lived",
+    "86": "Silvia Lived",
+    "87": "Edain Lived",
+    "88": "Brigid Lived",
+    "89": "Player Death In Gen2",
+    "96": "Chapter Final Arion Died"
   }
 }
