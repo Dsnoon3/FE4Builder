@@ -105,6 +105,27 @@ class EventCommandWindow(tk.Toplevel):
         for i,(label,offset,size,low,high) in enumerate(FIELDS.get(schema(c),[])):
             ttk.Label(self.fields,text=label if c['opcode']==0x42 and i==1 else label+f' ({low}–{high})').grid(row=i,column=0,sticky='w',padx=(0,12),pady=4)
             options={f'{name} (0x{value:04X})':value for value,name in self.names.items()} if schema(c)=='character_sprite' else {}
+            if schema(c)=='give_item':
+                from event_commands import give_recipients,player_item_options
+                known=give_recipients(self.rom) if i==0 else player_item_options(self.rom)
+                old=self.model.values(index)[i]
+                if old not in known:known[old]='Existing unknown value (preserve only)'
+                options={f'{name} [ID ${value:04X}]' if i==0 else f'{name} [PID ${value:02X} / {value}]':value for value,name in known.items()}
+            if c['opcode']==0x3b and i==1:
+                from event_commands import TRANSITION_MODES
+                known=dict(TRANSITION_MODES);old=self.model.values(index)[i]
+                if old not in known:known[old]='Existing combined mode (preserve only)'
+                options={name:value for value,name in known.items()}
+            if schema(c)=='set_permanent_flag':
+                from event_commands import permanent_flag_options
+                known=permanent_flag_options();old=self.model.values(index)[i]
+                if old not in known:known[old]='Existing unnamed flag (preserve only)'
+                options={f'{name} [ID {value} / ${value:02X}]':value for value,name in known.items()}
+            if schema(c)=='undeploy_unit':
+                from event_commands import undeploy_options
+                known=undeploy_options(self.rom);old=self.model.values(index)[i]
+                if old not in known:known[old]='Existing unknown character (preserve only)'
+                options={f'{name} (${value:04X})':value for value,name in known.items()}
             if c['opcode'] in (0x4b,0x4c):
                 from event_commands import chapter_flag_options
                 from events import CHAPTERS
@@ -184,6 +205,64 @@ class EventCommandWindow(tk.Toplevel):
                 self.variables[1].set(next(label for label,key in options.items() if key==value))
                 self.remember_command()
             self.variables[0].trace_add('write',update_flags)
+        if schema(c)=='give_item':
+            from player_items import SlotLocations
+            if not hasattr(self.model,'_item_locations'):
+                try:self.model._item_locations=SlotLocations(self.rom)
+                except (ValueError,IndexError):self.model._item_locations=None
+            def explain_item_grant(*_):
+                if self.command!=index:return
+                text=self.variables[1].get();slot=self.field_options[1].get(text)
+                if slot is None:return
+                locations=self.model._item_locations
+                if locations is None or slot not in locations.rows:
+                    self.help.set(HELP['give_item']+'\n\nIndexed appearances unavailable for this slot.');return
+                rows=locations.rows[slot]
+                uses='\n'.join(row.title for row in rows) or 'No indexed appearances found; custom ASM or unindexed paths may still use it.'
+                self.help.set(HELP['give_item']+f'\n\nSelected PID ${slot:02X} - indexed appearances:\n'+uses+'\n\n'+locations.summary(slot)+f'\nIndex coverage: {len(locations.warnings)} unresolved/partial paths. Review the source events before reusing a slot.')
+            self.variables[1].trace_add('write',explain_item_grant);explain_item_grant()
+        if c['opcode']==0x3b:
+            def explain_transition(*_):
+                if self.command!=index:return
+                try:
+                    timing=number(self.variables[0].get())
+                    text=self.variables[1].get();mode=self.field_options[1].get(text)
+                    if mode is None:mode=number(text)
+                    if not 0<=timing<=63 or not 0<=mode<=3:raise ValueError()
+                    packed=timing|(mode<<6)
+                    warning='Existing zero timing is preserved; on a bright screen it can take about 64 seconds to fade out.' if timing==0 else f'Approximate fade-out time: {15*timing/60:.2f} seconds at 60 fps (setup time is additional).'
+                    if mode&2:warning+=' Leave-dark mode needs a separate Fade In command before returning visible control.'
+                    self.help.set(HELP[0x3b]+f'\n\nDraft parameter: ${packed:02X}. '+warning+'\nFinish temporary routes at End first; Halt alone is insufficient. Yield after dialogue and camera movement before transitioning. This editor does not insert waits or fade-in commands automatically.')
+                except ValueError:self.help.set(HELP[0x3b]+'\n\nChoose a verified mode and a whole-number fade interval from 1 to 63; original zero can be retained.')
+            for var in self.variables:var.trace_add('write',explain_transition)
+            explain_transition()
+        if schema(c)=='set_permanent_flag':
+            def explain_permanent(*_):
+                if self.command!=index:return
+                from event_commands import permanent_flag_options
+                text=self.variables[0].get();value=self.field_options[0].get(text)
+                if value is None:return
+                name=permanent_flag_options().get(value,'Unnamed flag')
+                self.help.set(HELP['set_permanent_flag']+f'\n\nSelected: {name} (ID {value}, ${value:02X}). This global flag will be set ON when this event executes. Changing the ROM command does not immediately change flags already stored in an existing save file.')
+            self.variables[0].trace_add('write',explain_permanent);explain_permanent()
+        if schema(c)=='undeploy_unit':
+            import base64
+            from portraits import character_portrait_id,Portrait,png_bytes
+            from dialogue_characters import character_choices
+            choices=character_choices(self.app)
+            face=ttk.Label(self.fields);face.grid(row=1,column=0,columnspan=2,sticky='w',pady=6)
+            def preview_undeploy(*_):
+                if self.command!=index:return
+                face.config(image='',text='Portrait preview unavailable');face.photo=None
+                try:
+                    label=self.variables[0].get();identity=self.field_options[0].get(label)
+                    if identity is None:identity=number(label)
+                    class_id=choices.get(identity,('',None))[1]
+                    portrait=Portrait(self.rom,character_portrait_id(self.rom,identity,class_id))
+                    face.photo=tk.PhotoImage(master=self,data=base64.b64encode(png_bytes(portrait.rows,portrait.colors)))
+                    face.config(image=face.photo,text='')
+                except (ValueError,IndexError):pass
+            self.variables[0].trace_add('write',preview_undeploy);preview_undeploy()
         if schema(c)=='deploy_group':
             def explain_group(*_):
                 if self.command!=index:return

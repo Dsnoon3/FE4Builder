@@ -12,7 +12,11 @@
 !/FE4Builder/assets/
 !/FE4Builder/scripts/
 !/FE4Builder/tests/
+!/FE4Builder/docs/
 !/FE4Builder/vendor/
+
+/FE4Builder/docs/*
+!/FE4Builder/docs/map-transition-research.md
 
 /FE4Builder/src/*
 !/FE4Builder/src/*.py
