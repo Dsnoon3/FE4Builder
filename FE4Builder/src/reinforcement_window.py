@@ -40,9 +40,9 @@ class ReinforcementWindow(tk.Toplevel):
         ttk.Button(bar,text='Reload',command=self.reload).pack(side='left')
         ttk.Button(bar,text='Undo ROM',command=lambda:self.history(False)).pack(side='left',padx=6)
         ttk.Button(bar,text='Redo ROM',command=lambda:self.history(True)).pack(side='left')
-        ttk.Button(bar,text='View event conditions…',command=self.view_event).pack(side='left',padx=6)
+        ttk.Button(bar,text='Open Event Editor…',command=self.view_event).pack(side='left',padx=6)
         ttk.Button(bar,text='Open Army Editor',command=self.open_army).pack(side='left')
-        ttk.Label(right,text='58 verified scripts / 542 loads. Other event formats remain viewable in Chapter Event Viewer.\n'
+        ttk.Label(right,text='58 verified scripts / 542 loads. Other event formats remain viewable in Event Editor.\n'
                   'This editor changes fixed-size operands; it does not add units, expand the ROM or rewrite dialogue.',wraplength=710).pack(anchor='w',pady=6)
         self.status=tk.StringVar();ttk.Label(self,textvariable=self.status,relief='sunken',padding=8,wraplength=1100).pack(fill='x',side='bottom')
         self.protocol('WM_DELETE_WINDOW',self.close);self.bind('<F5>',lambda _:self.launch())
@@ -150,14 +150,10 @@ class ReinforcementWindow(tk.Toplevel):
 
     def view_event(self):
         if self.model is None or not self.settle():return
-        window=self.app.view_events()
+        window=self.app.edit_events(self.model.entry['id'])
         if window:
-            window.transient(self);window.grab_set()
-            window.bind('<Destroy>',lambda event:self.grab_set() if event.widget is window and self.winfo_exists() else None)
-            window.chapter.current(self.model.entry['chapter']);window.populate()
-            for i,(trigger,e) in enumerate(window.visible):
-                if not trigger and e['id']==self.model.entry['id']:
-                    window.list.selection_clear(0,'end');window.list.selection_set(i);window.list.see(i);window.select();break
+            window.transient(self)
+            window.bind('<Destroy>',lambda event:self.grab_set() if event.widget is window and self.winfo_exists() else None,add='+')
 
     def launch(self):return self.app.save_and_launch(save_callback=self.save,parent=self)
     def open_army(self):

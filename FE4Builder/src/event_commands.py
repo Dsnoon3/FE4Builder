@@ -1,4 +1,4 @@
-"""Fixed-length Prologue event operand editing with shared layout and stale-draft guards."""
+"""Fixed-length chapter event operand editing with shared layout and stale-draft guards."""
 import json
 from functools import lru_cache
 from rom import DATA_DIR
@@ -7,16 +7,16 @@ from event_layouts import checked
 
 # (Label, operand offset, bytes, minimum, maximum)
 BACKGROUNDS={0:'Fountain',1:'Gate',2:'Alley',3:'Throne',4:'Hallway',5:'Cloister'}
-FIELDS={'give_item':[('Recipient',2,2,1,65535),('Player item slot',4,1,1,142)],0x3b:[('Fade interval',1,1,1,63),('Transition mode',1,1,0,2)],'set_permanent_flag':[('Permanent flag',2,1,0,255)],'undeploy_unit':[('Character',2,2,1,696)],'deploy_group':[('Unit group',2,1,0,57)],0x4b:[('Chapter',1,1,0,11),('Event flag',2,1,0,79)],0x4c:[('Chapter',1,1,0,11),('Event flag',2,1,0,79)],0x27:[('Character',1,2,1,696),('Start X',3,1,0,63),('Start Y',4,1,0,63),('Movement speed',5,1,1,5),('Sprite color',6,1,2,8),('Disappear offscreen',5,1,0,1)],0x14:[('Dialogue scene',1,3,0,0xffffff),('Background',4,1,0,5),('Fade timing',6,1,1,255)],0x0c:[('Dialogue scene',1,3,0,0xffffff)],0x0e:[('Music track',1,1,0,255)],0x11:[('Byte sound effect',1,1,0,255)],0x12:[('Word sound command',1,2,0,65535)],0x34:[('Pause ticks',1,2,1,65535)],0x3a:[('Camera X',1,1,0,63),('Camera Y',2,1,0,63)],
+FIELDS={'remove_chapter_struct':[('Chapter',2,1,0,11)],'set_unit_castle':[('Character',2,2,1,696),('Castle',4,1,0,255)],0x3f:[('Initial scroll speed',4,1,1,255)],'remove_unit':[('Character',2,2,1,696)],0x22:[('Character',1,2,1,696),('Start X',3,1,0,63),('Start Y',4,1,0,63),('Destination X',5,1,0,63),('Destination Y',6,1,0,63),('Movement speed',7,1,1,5),('Coordinate source',7,1,0,2),('Sprite color',8,1,2,8),('Disappear offscreen',7,1,0,1)],0x08:[('Chapter',1,1,0,11),('Event flag',2,1,0,79)],'give_item':[('Recipient',2,2,1,65535),('Player item slot',4,1,1,142)],0x3b:[('Fade interval',1,1,1,63),('Transition mode',1,1,0,2)],'set_permanent_flag':[('Permanent flag',2,1,0,255)],'undeploy_unit':[('Character',2,2,1,696)],'deploy_group':[('Unit group',2,1,0,57)],0x4b:[('Chapter',1,1,0,11),('Event flag',2,1,0,79)],0x4c:[('Chapter',1,1,0,11),('Event flag',2,1,0,79)],0x27:[('Character',1,2,1,696),('Start X',3,1,0,63),('Start Y',4,1,0,63),('Movement speed',5,1,1,5),('Sprite color',6,1,2,8),('Disappear offscreen',5,1,0,1)],0x14:[('Dialogue scene',1,3,0,0xffffff),('Background',4,1,0,5),('Fade timing',6,1,1,255)],0x0c:[('Dialogue scene',1,3,0,0xffffff)],0x0e:[('Music track',1,1,0,255)],0x11:[('Byte sound effect',1,1,0,255)],0x12:[('Word sound command',1,2,0,65535)],0x34:[('Pause ticks',1,2,1,65535)],0x3a:[('Camera X',1,1,0,63),('Camera Y',2,1,0,63)],
         0x23:[('Unit group',1,1,0,57),('Entry in group',2,2,1,65535),('Start X',4,1,0,63),('Start Y',5,1,0,63),('Movement speed',6,1,0,7)],
-        0x24:[('Character',1,2,1,696),('Faction slot',3,1,0,3),('Start X',4,1,0,63),('Start Y',5,1,0,63),('Destination X',6,1,0,63),('Destination Y',7,1,0,63),('Movement speed',8,1,0,7),('Sprite color',9,1,2,6),('Group leader',10,1,0,1),('AI setting',10,1,0,15)],
+        0x24:[('Character',1,2,1,696),('Faction slot',3,1,0,6),('Start X',4,1,0,63),('Start Y',5,1,0,63),('Destination X',6,1,0,63),('Destination Y',7,1,0,63),('Movement speed',8,1,0,7),('Sprite color',9,1,2,6),('Group leader',10,1,0,1),('AI setting',10,1,0,15)],
         0x42:[('Character',1,2,1,696),('Slot',3,1,0,1)],
         0x40:[('Camera X',1,1,0,63),('Camera Y',2,1,0,63),('Scroll speed',3,1,1,255)],
         0x46:[('Fade timing',1,1,1,255)],0x47:[('Fade timing',1,1,1,255)],
         'talk_target':[('Initiator',2,1,1,255),('Target',3,1,0,255)],
         'character_sprite':[('Prepare map sprite for',2,2,1,696)]}
 def schema(command):
-    if command['opcode']==0x4a:return {0x49:'character_sprite',0x57:'give_item',0x36:'set_permanent_flag',0x66:'undeploy_unit',0x4e:'deploy_group',0x5c:'update_locations_map_changes',0x68:'talk_target'}.get(command.get('condition'),command['opcode'])
+    if command['opcode']==0x4a:return {0x34:'remove_chapter_struct',0x6d:'add_castle_money',0x78:'save_chapter_turncount',0x49:'character_sprite',0x57:'give_item',0x36:'set_permanent_flag',0x61:'set_unit_castle',0x65:'remove_unit',0x66:'undeploy_unit',0x4e:'deploy_group',0x5c:'update_locations_map_changes',0x68:'talk_target'}.get(command.get('condition'),command['opcode'])
     return command['opcode']
 
 def audio_kind(command):return {0x0e:'music',0x11:'byte',0x12:'word'}.get(command['opcode'])
@@ -45,12 +45,27 @@ HELP={'give_item':'Give the recipient a persistent Player Item ID (PID), not a g
       0x12:'Choose an observed full word sound-driver command. Some control fading/volume rather than play an effect; preview can include background music. The full 16-bit word is preserved.',
       'character_sprite':'Prepare the selected character’s map-sprite graphics. This does not spawn, move or recruit that character. Match the graphics required by the later deployment/movement commands.',0x34:'Delay before the next command, in event timer ticks. This does not change dialogue waits or movement timing.',
       0x3a:'Move the camera to these map coordinates (0–63). This changes the camera only; units and terrain stay in place.',
-      0x24:'Deploy an existing character and animate their entrance from Start to Destination. Faction slots here are Prologue groups; sprite color does not change allegiance. Group leader marks the commander. AI setting is the native 0–15 value, whose behavior depends on the faction AI. Movement speed changes only the entrance animation; other movement flags are preserved. Prepare the matching map sprite earlier in the event. Avoid deploying the same character twice, and review later dialogue and movement commands after replacing a character.',
+      0x24:'Deploy an existing character and animate their entrance from Start to Destination. Faction slots are local to this chapter; sprite color does not change allegiance. Group leader marks the commander. AI setting is the native 0–15 value, whose behavior depends on the faction AI. Movement speed changes only the entrance animation; other movement flags are preserved. Prepare the matching map sprite earlier in the event. Avoid deploying the same character twice, and review later dialogue and movement commands after replacing a character.',
       0x40:'Pan the camera smoothly to X/Y (0–63), measured in map tiles at the upper-left of the screen. Scroll speed accepts 1–255; larger values move faster. Zero is rejected because it cannot advance the scroll. Units and terrain stay in place. Keep the destination within the chapter camera area and test the scene in-game.',
       0x46:'Native fade-in timing parameter (1–255). This is not a duration in seconds; test the transition in-game.',
       0x47:'Native fade-out timing parameter (1–255). This is not a duration in seconds; test the transition in-game.'}
 
+
+HELP.update({
+    'remove_chapter_struct':'Remove the selected chapter’s active event record from RAM, including its temporary event flags. This is chapter-end cleanup, not deletion of chapter data from the ROM. If the chapter record is absent, no record is removed. Use the chapter being finished; removing its state before later flag checks can break event sequencing. This does not itself load the next chapter. Parameter: one-byte chapter ID. Native instruction: 4A 34.',
+    'add_castle_money':'Read-only, no parameters. Pay castle income to living player units (faction slot 0). In the supported ROM the routine counts player/allied-controlled castles, subtracts two, then multiplies by 1,000 gold before adding the result to each eligible unit. This is not a flat 1,000 per castle: the source comment omits the subtraction. The amount and faction are fixed in game code, not operands of this event. Run before removing the chapter event state. Native instruction: 4A 6D.',
+    'save_chapter_turncount':'Read-only, no parameters. Record the current turn count in the current chapter’s history, then set the active turn counter to FFFF and perform chapter-completion bookkeeping, including clearing the unit/terrain window processes. In Chapters 5 and Final it also accumulates the living player-unit count. This does not write a save slot or take a chapter ID. Keep it at the intended end-of-chapter point. Native instruction: 4A 78.',
+    'set_unit_castle':'Place an existing loaded character inside the selected castle in the current chapter. The native routine sets castle residence, hides the field deployment and updates its coordinates while retaining the character data. It does not animate an entrance, recruit the unit or change castle ownership. If the character is not loaded, nothing happens. Parameters: two-byte character ID and one-byte chapter location ID. Use a valid castle in this event’s chapter. Native instruction: 4A 61.',
+    0x3f:'Scroll the camera along a direction/distance route beginning at its position when this command executes. Initial speed is pixels per update (1-255); route steps may change it. Edit camera route creates a private copy for this caller and preserves the old route and other callers. The route pointer is managed by the route editor. Directions, tile counts, speed changes and End are supported. Existing $12 records are preserve-only: the source calls them MAP_PAUSE, but the native camera decoder handles them as no-direction distance, not normal timed pauses. Do not insert unit movement Halt/Face/Wait commands into camera routes. Native opcode: 3F.',
+    'remove_unit':'Undeploy the selected character and delete their loaded unit record from RAM. This is stronger than Undeploy Unit, which retains that record. If the character is not loaded, nothing happens. This command does not itself set a death or story flag, and it does not animate a departure. Keep subsequent unit references and separate temporary-sprite movement aligned. Native instruction: 4A 65 followed by the two-byte character ID.',
+    0x22:'Animate a temporary character map sprite toward destination coordinates. This is visual only: it does not deploy a character or move their gameplay unit. Explicit coordinates uses the stored start/destination. Event Slot 1 replaces START X/Y; Event Slot 2 replaces DESTINATION X/Y. Fill the selected slot first; invalid slot coordinates skip movement. Combined legacy mode uses Slot 1 first and is preserve-only. Ignored stored coordinates (including 255) can remain unchanged. New explicit coordinates must be 0-63; supported speeds are 1-5. Sprite color is visual. Disappear offscreen controls the temporary sprite. The unknown high flag is preserved. Match sprite preparation and later movement waits. Native opcode: 22.',
+    0x08:'Check whether the selected chapter-local event flag is ON and store True or False for a later Jump If True / Jump If False. This reads the flag without changing it. Parameters: chapter ID and flag ID (0-79). Select the chapter in which this event runs: if that chapter is unavailable, the native handler leaves the previous test result unchanged rather than returning False. Another test can overwrite the result before a jump uses it. Example: the Prologue Sigurd/Arvis conversation checks whether Azelle died to select its dialogue. Original command: TEST_FLAG_IN_CHAPTER_SET; native opcode 08.',
+    0x02:'Read-only. Continue at the destination regardless of the previous test result. This skips or repeats part of a script; it is not an Else command and does not return automatically. Its one parameter is a two-byte destination address in the event bank, which must point to the start of a command. Original command: JUMP; native opcode 02.',
+    0x03:'Read-only. Continue at the destination if the stored test result is True; otherwise continue with the next command. Use a preceding check such as Check Chapter Flag. Its one parameter is a two-byte destination address in the event bank, which must point to the start of a command. Original command: JUMP_TRUE; native opcode 03.',
+    0x04:'Read-only. Continue at the destination if the stored test result is False; otherwise continue with the next command. Use a preceding check such as Check Chapter Flag. Its one parameter is a two-byte destination address in the event bank, which must point to the start of a command. Original command: JUMP_FALSE; native opcode 04.'})
+
 def field_bits(command,index):
+    if command['opcode']==0x22:return {5:(15,0),6:(96,5),8:(16,4)}.get(index,(65535 if index==0 else 255,0))
     if command['opcode']==0x3b:return (63,0) if index==0 else (192,6)
     if command['opcode']==0x27:return {3:(7,0),5:(16,4)}.get(index,(65535 if index==0 else 255,0))
     if command['opcode']==0x23 and index==4:return (7,0)
@@ -70,6 +85,25 @@ def player_item_options(rom):
 
 TRANSITION_MODES={0:'Preserve live terrain / automatic reveal',1:'Reload terrain / automatic reveal',2:'Reload terrain / leave dark (separate fade-in)'}
 
+def castle_context(rom,chapter):
+    from objectives import catalogue as objective_catalogue
+    records=objective_catalogue()['chapters'][chapter]['castles']
+    at=0x6c760+chapter*3+rom.header
+    pointer=bytes(rom.data[at:at+3]);cpu=int.from_bytes(pointer,'little');data=pc_address(cpu)+rom.header
+    word=bytes(rom.data[data:data+2]);table=pc_address((cpu&0xff0000)|int.from_bytes(word,'little'))+rom.header
+    count=rom.data[table]
+    if count>64:raise ValueError('Unsupported chapter location count.')
+    raw=bytes(rom.data[table:table+1+count*2])
+    addresses={pc_address((cpu&0xff0000)|int.from_bytes(raw[1+i*2:3+i*2],'little')) for i in range(count)}
+    names={};snapshot=[pointer,word,raw]
+    for record in records:
+        address=record['address'];at=address+rom.header
+        entry=bytes(rom.data[at:at+8])
+        if address not in addresses or len(entry)!=8 or entry[0]!=record['id'] or entry[2]!=0:
+            raise ValueError('Castle location layout changed. Reload a supported chapter layout.')
+        names[record['id']]=record['label'];snapshot.append(entry)
+    return names,tuple(snapshot)
+
 def permanent_flag_options():
     return {int(key):name for key,name in catalogue().get('permanent_flags',{}).items()}
 
@@ -85,9 +119,14 @@ def temporary_options(rom,index):
     if index==0:return character_options(rom)
     return {4:{2:'Blue',4:'Red',6:'Green',8:'Yellow'},5:{0:'No',1:'Yes'}}.get(index,{})
 
-def deployment_options(rom,index):
+def coordinate_move_options(rom,index):
     if index==0:return character_options(rom)
-    return {1:{0:'Player',1:'Evans',2:'Yngvi',3:'Arvis'},7:{2:'Blue',4:'Red',6:'Green'},8:{0:'No',1:'Yes'}}.get(index,{})
+    return {6:{0:'Explicit start and destination',1:'Start from Event Unit Slot 1',2:'Destination from Event Unit Slot 2'},7:{2:'Blue',4:'Red',6:'Green',8:'Yellow'},8:{0:'No',1:'Yes'}}.get(index,{})
+
+def deployment_options(rom,index,chapter=0):
+    if index==0:return character_options(rom)
+    factions={0:'Player',1:'Evans',2:'Yngvi',3:'Arvis'} if chapter==0 else {i:'Player' if i==0 else f'Faction slot {i}' for i in range(7)}
+    return {1:factions,7:{2:'Blue',4:'Red',6:'Green'},8:{0:'No',1:'Yes'}}.get(index,{})
 
 @lru_cache(maxsize=1)
 def catalogue():return json.loads((DATA_DIR/'event_commands.json').read_text(encoding='utf-8'))
@@ -99,6 +138,7 @@ class EventCommands:
         if len(self.pointer)!=3 or pc_address(int.from_bytes(self.pointer,'little'))!=self.profile['start']:
             raise ValueError('This event has moved. Editing requires its verified original location.')
         self.snapshot=checked(rom,self.profile);self.commands=self.entry['commands']
+        self.castle_snapshot=castle_context(rom,self.entry['chapter'])[1] if any(c['editable'] and schema(c)=='set_unit_castle' for c in self.commands) else None
         self.group_snapshot=bytes(rom.data[0x1c000+rom.header:0x20000+rom.header])
         self.item_snapshot=bytes(rom.data[0x3f489+rom.header:0x3f489+142+rom.header])
     def dialogues(self):
@@ -110,6 +150,9 @@ class EventCommands:
         command=self.commands[index];at=command['offset']
         return [(int.from_bytes(self.snapshot[at+offset:at+offset+size],'little') & field_bits(command,i)[0]) >> field_bits(command,i)[1] for i,(_,offset,size,_,_) in enumerate(FIELDS.get(schema(command),[]))]
     def describe(self,index):
+        try:return self._describe(index)
+        except (ValueError,KeyError,IndexError):return self.commands[index]['name'].replace('_',' ').title()+' (parameters unavailable)'
+    def _describe(self,index):
         command=self.commands[index];fields=FIELDS.get(schema(command),[])
         values=self.values(index)
         if schema(command)=='character_sprite':
@@ -121,6 +164,11 @@ class EventCommands:
             return 'Give Player Item - '+give_recipients(self.rom).get(values[0],f'Unknown recipient ${values[0]:04X}')+' / '+player_item_options(self.rom).get(values[1],f'Unknown PID ${values[1]:02X}')+f' [PID ${values[1]:02X}]'
         if schema(command)=='set_permanent_flag':
             return 'Set Permanent Flag - '+permanent_flag_options().get(values[0],f'Unknown flag ${values[0]:02X}')
+        if schema(command)=='set_unit_castle':
+            names=castle_context(self.rom,self.entry['chapter'])[0]
+            return 'Set Unit in Castle - '+undeploy_options(self.rom).get(values[0],str(values[0]))+' / '+names.get(values[1],f'Unknown castle {values[1]}')
+        if schema(command)=='remove_unit':
+            return 'Remove Unit - '+undeploy_options(self.rom).get(values[0],f'Unknown character ${values[0]:04X}')
         if schema(command)=='undeploy_unit':
             return 'Undeploy Unit - '+undeploy_options(self.rom).get(values[0],f'Unknown character ${values[0]:04X}')
         if schema(command)=='deploy_group':
@@ -151,6 +199,8 @@ class EventCommands:
             raise ValueError('Army deployment data changed. Reload before editing group loads.')
         if any(type(i) is int and 0<=i<len(self.commands) and schema(self.commands[i])=='give_item' for i in updates) and current.item_snapshot!=self.item_snapshot:
             raise ValueError('Player item identities changed. Reload before editing item grants.')
+        if any(type(i) is int and 0<=i<len(self.commands) and schema(self.commands[i])=='set_unit_castle' for i in updates) and current.castle_snapshot!=self.castle_snapshot:
+            raise ValueError('Castle data changed while this editor was open. Reload before writing.')
         edits={};details=[]
         for index,values in updates.items():
             if type(index) is not int or not 0<=index<len(self.commands):raise ValueError('Unknown command selection.')
@@ -165,25 +215,33 @@ class EventCommands:
             if command['opcode']==0x23:
                 if any(type(v) is not int for v in values):raise ValueError('Group load parameters must be whole numbers.')
                 if values[0] not in unit_groups(self.rom) or values[1] not in group_units(self.rom,values[0]):raise ValueError('Choose a valid unit entry in the selected deployment group.')
+            if command['opcode']==0x22 and len(values)==9 and all(type(v) is int for v in values):
+                mode=values[6]
+                explicit=values[3:5] if mode in (1,3) else values[1:3] if mode==2 else values[1:5]
+                if mode!=self.values(index)[6] and any(not 0<=v<64 for v in explicit):raise ValueError('Set valid explicit coordinates (0-63) for the selected coordinate source.')
             for field_index,((label,offset,size,low,high),value,old) in enumerate(zip(fields,values,self.values(index))):
                 if type(value) is not int or (not low<=value<=high and value!=old):raise ValueError(f'{label} must be {low}–{high}.')
+                if schema(command)=='set_unit_castle' and value!=old and value not in (undeploy_options(self.rom) if field_index==0 else castle_context(self.rom,self.entry['chapter'])[0]):
+                    raise ValueError(f'{label}: choose a listed character or castle in this chapter.')
                 if schema(command)=='give_item' and value!=old and value not in (give_recipients(self.rom) if field_index==0 else player_item_options(self.rom)):
                     raise ValueError(f'{label}: choose a listed recipient or persistent item slot.')
+                if command['opcode']==0x22 and value!=old and coordinate_move_options(self.rom,field_index) and value not in coordinate_move_options(self.rom,field_index):
+                    raise ValueError(f'{label}: choose a listed option.')
                 if command['opcode']==0x27 and value!=old and temporary_options(self.rom,field_index) and value not in temporary_options(self.rom,field_index):
                     raise ValueError(f'{label}: choose a listed option.')
                 if command['opcode']==0x3b and field_index==1 and value!=old and value not in TRANSITION_MODES:
                     raise ValueError('Choose a verified transition mode.')
                 if schema(command)=='set_permanent_flag' and value!=old and value not in permanent_flag_options():
                     raise ValueError('Choose a named permanent flag. Existing unknown flags may be preserved.')
-                if schema(command)=='undeploy_unit' and value!=old and value not in undeploy_options(self.rom):
-                    raise ValueError('Choose a listed character to undeploy.')
+                if schema(command) in ('undeploy_unit','remove_unit') and value!=old and value not in undeploy_options(self.rom):
+                    raise ValueError('Choose a listed character.')
                 if command['opcode']==0x42 and field_index==0 and value!=old and value not in character_options(self.rom):
                     raise ValueError('Choose a character with a valid unit assignment.')
                 if command['opcode']==0x14 and field_index==1 and value!=old and value not in BACKGROUNDS:
                     raise ValueError('Choose a listed dialogue background.')
                 if schema(command)=='talk_target' and value!=old and value not in talk_options(self.rom,field_index):
                     raise ValueError(f'{label}: choose a named character with a one-byte ID.')
-                if command['opcode']==0x24 and deployment_options(self.rom,field_index) and value!=old and value not in deployment_options(self.rom,field_index):
+                if command['opcode']==0x24 and deployment_options(self.rom,field_index,self.entry['chapter']) and value!=old and value not in deployment_options(self.rom,field_index,self.entry['chapter']):
                     raise ValueError(f'{label}: choose a listed option.')
                 if command['opcode'] in (0x0c,0x14) and field_index==0 and value!=old and value not in {o['pointer'] for o in self.dialogues()}:
                     raise ValueError('Dialogue scene: choose a supported scene from Find dialogue.')

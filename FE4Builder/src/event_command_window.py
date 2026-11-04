@@ -1,31 +1,40 @@
-"""Prologue command editor: edit verified operands, keep the surrounding script intact."""
+"""Chapter command editor: edit verified operands, keep the surrounding script intact."""
 import tkinter as tk
 from tkinter import ttk,messagebox
 from rom import number
-from events import hex_dump
+from events import hex_dump,CHAPTERS
 from event_commands import EventCommands,catalogue,FIELDS,HELP,schema,character_options,audio_kind,audio_options,deployment_options,talk_options,BACKGROUNDS,unit_groups,group_units
 from ui_common import ask_unsaved,scrollable_frame
 
 class EventCommandWindow(tk.Toplevel):
     def __init__(self,app,event_id=None):
         super().__init__(app);self.app=app;self.rom=app.rom;self.current=None;self.model=None;self.command=None;self.variables=[];self.field_options=[];self.drafts={};self.loaded={};self._parameter_reset=None
-        self.title('FE4Builder — Event Editor (Prologue)');self.geometry('1200x780');self.minsize(940,620)
+        self.title('FE4Builder — Event Editor');self.geometry('1200x780');self.minsize(940,620)
         self.names=character_options(self.rom)
         self.transient(app);self.grab_set()
         top=ttk.Frame(self,padding=12);top.pack(fill='x')
-        ttk.Label(top,text='Event Editor · Prologue',style='Title.TLabel').pack(side='left')
+        ttk.Label(top,text='Event Editor',style='Title.TLabel').pack(side='left')
         ttk.Button(top,text='Write to ROM',command=self.save).pack(side='right')
         ttk.Button(top,text='Save & Launch (F5)',command=self.launch).pack(side='right',padx=8)
         ttk.Label(self,text='Edit unit deployments, music, sound commands, sprite preparation, cameras, pauses and fades. Other commands are read-only.\n'
                   'Script length and command order are preserved. Route edits create private copies. Test edited scenes in-game.',padding=(12,0)).pack(anchor='w')
         body=ttk.Panedwindow(self,orient='horizontal');body.pack(fill='both',expand=True,padx=12,pady=8)
         left=ttk.Frame(body);body.add(left,weight=1)
-        ttk.Label(left,text='Prologue scripts').pack(anchor='w')
+        ttk.Label(left,text='Chapter').pack(anchor='w')
+        self.chapter=ttk.Combobox(left,state='readonly',values=CHAPTERS,width=25);self.chapter.current(0);self.chapter.pack(fill='x',pady=4)
+        self.chapter.bind('<<ComboboxSelected>>',self.change_chapter)
+        self.search=tk.StringVar();ttk.Entry(left,textvariable=self.search).pack(fill='x',pady=(0,6))
+        self.search.trace_add('write',lambda *_:self.populate())
+        ttk.Label(left,text='Search event names, IDs or commands').pack(anchor='w')
         frame=ttk.Frame(left);frame.pack(fill='both',expand=True)
         self.list=tk.Listbox(frame,exportselection=False,width=32);bar=ttk.Scrollbar(frame,command=self.list.yview)
         bar.pack(side='right',fill='y');self.list.config(yscrollcommand=bar.set);self.list.pack(fill='both',expand=True)
         self.list.bind('<<ListboxSelect>>',self.select)
-        right=ttk.Frame(body);body.add(right,weight=3)
+        right_shell=ttk.Frame(body);body.add(right_shell,weight=3)
+        self.tabs=ttk.Notebook(right_shell);self.tabs.pack(fill='both',expand=True)
+        right=ttk.Frame(self.tabs);self.tabs.add(right,text='Commands')
+        self.reference_text=self.text_tab('Reference & live bytes')
+        self.triggers_text=self.text_tab('Chapter triggers')
         self.heading=tk.StringVar();ttk.Label(right,textvariable=self.heading,font=('Segoe UI',12,'bold')).pack(anchor='w')
         frame=ttk.Frame(right);frame.pack(fill='both',expand=True,pady=8)
         self.commands=ttk.Treeview(frame,columns=('state','address','command'),show='headings',selectmode='browse',height=9)
@@ -49,14 +58,81 @@ class EventCommandWindow(tk.Toplevel):
         ttk.Button(actions,text='Reload script',command=self.reload).pack(side='left')
         ttk.Button(actions,text='Undo ROM',command=lambda:self.history(False)).pack(side='left',padx=6)
         ttk.Button(actions,text='Redo ROM',command=lambda:self.history(True)).pack(side='left')
-        ttk.Button(actions,text='View event / linked editors',command=self.open_viewer).pack(side='left',padx=6)
+        linked=ttk.Frame(right);linked.pack(fill='x')
+        for label,kind in [('Reinforcements','reinforcements'),('Conversations','conversations'),('Objectives','objectives'),('Village Rewards','villages')]:
+            ttk.Button(linked,text=label,command=lambda k=kind:self.open_linked(k)).pack(side='left',padx=3)
         self.status=tk.StringVar();ttk.Label(self,textvariable=self.status,padding=8,wraplength=1120,relief='sunken').pack(side='bottom',fill='x')
-        self.visible=list(range(len(catalogue()['entries'])))
-        for e in catalogue()['entries']:
-            count=sum(c['editable'] for c in e['commands']);self.list.insert('end',f'{e["id"]:03X} · {e["label"]} ({count})')
-        index=next((i for i,e in enumerate(catalogue()['entries']) if e['id']==event_id),0)
-        self.list.selection_set(index);self.load(index)
+        self.visible=[]
+        self.focus_event(event_id if event_id is not None else catalogue()['entries'][0]['id'])
         self.protocol('WM_DELETE_WINDOW',self.close);self.bind('<F5>',lambda _:self.launch())
+
+    def text_tab(self,title):
+        frame=ttk.Frame(self.tabs);self.tabs.add(frame,text=title)
+        text=tk.Text(frame,wrap='none',font=('Consolas',10),state='disabled')
+        y=ttk.Scrollbar(frame,command=text.yview);y.pack(side='right',fill='y')
+        x=ttk.Scrollbar(frame,orient='horizontal',command=text.xview);x.pack(side='bottom',fill='x')
+        text.config(yscrollcommand=y.set,xscrollcommand=x.set);text.pack(fill='both',expand=True)
+        return text
+
+    def put(self,text,value):
+        text.config(state='normal');text.delete('1.0','end');text.insert('1.0',value);text.config(state='disabled')
+
+    def populate(self):
+        query=self.search.get().strip().casefold();chapter=self.chapter.current()
+        self.visible=[i for i,e in enumerate(catalogue()['entries']) if e['chapter']==chapter and query in (f"{e['id']:03X} {e['id']} "+e['label']+' '+e.get('source','')+' '+' '.join(c['name'] for c in e['commands'])).casefold()]
+        self.visible.sort(key=lambda i:catalogue()['entries'][i]['id'])
+        self.list.delete(0,'end')
+        for i in self.visible:
+            e=catalogue()['entries'][i];count=sum(c['editable'] for c in e['commands'])
+            self.list.insert('end',f"{e['id']:03X} · {e['label']} ({count} editable)")
+        if self.current in self.visible:self.list.selection_set(self.visible.index(self.current))
+
+    def change_chapter(self,_=None):
+        if not self.settle():
+            if self.current is not None:self.chapter.current(catalogue()['entries'][self.current]['chapter'])
+            return
+        self.search.set('');self.populate()
+        if self.visible:
+            self.list.selection_set(0);self.load(self.visible[0]);self.tabs.select(0)
+
+    def focus_event(self,event_id,address=None):
+        index=next((i for i,e in enumerate(catalogue()['entries']) if e['id']==event_id),None)
+        if index is None:return False
+        if self.current is not None and not self.settle():return False
+        self.chapter.current(catalogue()['entries'][index]['chapter']);self.search.set('');self.populate()
+        self.list.selection_clear(0,'end');self.list.selection_set(self.visible.index(index));self.list.see(self.visible.index(index));self.load(index)
+        if address is not None:self.focus_reference(address)
+        return True
+
+    def show_reference(self,index):
+        from events import catalogue as references,inspect
+        entry=catalogue()['entries'][index];source=next(e for e in references()['events'] if e['id']==entry['id'])
+        try:
+            state=inspect(self.rom,source)
+            heading='Reference annotation (may differ after edits). Live ROM bytes follow.\n\n'+source['source']+'\n\nLive ROM bytes:\n'
+            self.reference_start=state['start'];self.reference_line=heading.count('\n')+1
+            self.put(self.reference_text,heading+hex_dump(state['raw'],state['start']))
+        except ValueError as error:self.put(self.reference_text,str(error)+'\n\n'+source['source'])
+        trigger=references()['chapters'][entry['chapter']]
+        try:
+            state=inspect(self.rom,trigger,True)
+            self.put(self.triggers_text,'Chapter conditions / actions (reference annotation; editing is in linked tools).\n\n'+trigger['source']+'\n\nLive ROM bytes:\n'+hex_dump(state['raw'],state['start']))
+        except ValueError as error:self.put(self.triggers_text,str(error)+'\n\n'+trigger['source'])
+
+    def focus_reference(self,address):
+        self.tabs.select(self.reference_text.master)
+        if self.model:
+            n=next((n for n,c in enumerate(self.model.commands) if self.model.profile['start']+c['offset']<=address<self.model.profile['start']+c['offset']+c['size']),None)
+            if n is not None:self.commands.selection_set(str(n));self.commands.see(str(n));self.select_command()
+        start=getattr(self,'reference_start',address)
+        if address>=start:
+            # Custom live grants can be beyond the historical inspection span.
+            end=min(len(self.rom.data)-self.rom.header,max(start+catalogue()['entries'][self.current]['profile']['length'],address+7))
+            heading='Live event bytes (reference annotations are on the Chapter triggers tab).\n'
+            self.put(self.reference_text,heading+hex_dump(bytes(self.rom.data[start+self.rom.header:end+self.rom.header]),start))
+            line=2+(address-start)//16
+            self.reference_text.tag_configure('item-slot-reference',background='#ffe6a3',foreground='#151515')
+            self.reference_text.tag_add('item-slot-reference',f'{line}.0',f'{line}.end');self.reference_text.see(f'{line}.0')
 
     def remember_command(self):
         if self.command in self.drafts:
@@ -67,7 +143,7 @@ class EventCommandWindow(tk.Toplevel):
         self.remember_command();return self.model is not None and self.drafts!=self.loaded
     def settle(self):
         if not self.pending():return True
-        answer=ask_unsaved(self,'Write the staged Prologue command changes to the opened ROM?')
+        answer=ask_unsaved(self,'Write the staged event command changes to the opened ROM?')
         return False if answer is None else self.save() if answer else True
     def select(self,_=None):
         selected=self.list.curselection()
@@ -83,13 +159,18 @@ class EventCommandWindow(tk.Toplevel):
         self.clear_parameter_fields()
         self.audio_button.config(state='disabled');self.ai_button.config(state='disabled');self.dialogue_button.config(state='disabled')
         self.heading.set(catalogue()['entries'][index]['label'])
+        self.show_reference(index)
         try:self.model=EventCommands(self.rom,index)
-        except ValueError as error:self.status.set('Editing disabled: '+str(error));return
+        except ValueError as error:
+            self.status.set('Editing disabled: '+str(error));self.tabs.select(self.reference_text.master);return
         for i,c in enumerate(self.model.commands):
             if c['editable']:self.drafts[i]=tuple(map(str,self.model.values(i)))
             self.commands.insert('','end',iid=str(i),values=('Editable' if c['editable'] else 'Read-only',f'{self.model.profile["start"]+c["offset"]:06X}',self.model.describe(i)))
         self.loaded=self.drafts.copy()
-        selected=next(iter(self.drafts),0);self.commands.selection_set(str(selected));self.commands.see(str(selected));self.select_command()
+        if self.model.commands:
+            selected=next(iter(self.drafts),0);self.commands.selection_set(str(selected));self.commands.see(str(selected));self.select_command()
+        if not self.model.commands:
+            self.status.set('Read-only layout: '+self.model.entry.get('unsupported','No decoded commands.'));self.tabs.select(self.reference_text.master);return
         self.status.set('Loaded live operands from a verified layout. Edits remain pending until Write to ROM. No commands are inserted or removed.')
     def select_command(self,_=None):
         selected=self.commands.selection()
@@ -98,9 +179,15 @@ class EventCommandWindow(tk.Toplevel):
         if index==self.command:return
         self.remember_command();self.command=index;self.variables=[];self.field_options=[]
         self.clear_parameter_fields()
+        if self._parameter_reset is not None:
+            self.after_cancel(self._parameter_reset);self._parameter_reset=None
         c=self.model.commands[index];self.dialogue_button.config(state='normal' if c['opcode'] in (0x0c,0x14) else 'disabled');self.ai_button.config(state='normal' if c['opcode']==0x24 else 'disabled');self.command_heading.set(f'Command {index+1} · '+c['name'].replace('_',' ').title())
         self.audio_button.config(state='normal' if c['opcode'] in (0x0e,0x11,0x12) else 'disabled')
         self.help.set(HELP.get(schema(c),'Read-only command. Use the linked dialogue, reinforcement, conversation or objective editor where supported.'))
+        if not c['editable']:
+            raw=self.model.snapshot[c['offset']:c['offset']+c['size']]
+            self.raw.set('Loaded command bytes (read-only):\n'+hex_dump(raw,self.model.profile['start']+c['offset']))
+            self._parameter_reset=self.after_idle(self.reset_parameter_view);return
         if FIELDS.get(schema(c)):self.fields.pack(fill='x',before=self.help_label)
         for i,(label,offset,size,low,high) in enumerate(FIELDS.get(schema(c),[])):
             ttk.Label(self.fields,text=label if c['opcode']==0x42 and i==1 else label+f' ({low}–{high})').grid(row=i,column=0,sticky='w',padx=(0,12),pady=4)
@@ -121,12 +208,23 @@ class EventCommandWindow(tk.Toplevel):
                 known=permanent_flag_options();old=self.model.values(index)[i]
                 if old not in known:known[old]='Existing unnamed flag (preserve only)'
                 options={f'{name} [ID {value} / ${value:02X}]':value for value,name in known.items()}
-            if schema(c)=='undeploy_unit':
+            if schema(c)=='remove_chapter_struct':
+                from events import CHAPTERS
+                known=dict(enumerate(CHAPTERS));old=self.model.values(index)[i]
+                if old not in known:known[old]='Existing unsupported chapter (preserve only)'
+                options={f'{name} [ID {value}]':value for value,name in known.items()}
+            if schema(c)=='set_unit_castle':
+                from event_commands import undeploy_options,castle_context
+                known=undeploy_options(self.rom) if i==0 else castle_context(self.rom,self.model.entry['chapter'])[0]
+                old=self.model.values(index)[i]
+                if old not in known:known[old]='Existing unknown value (preserve only)'
+                options={f'{name} [ID {value}]':value for value,name in known.items()}
+            if schema(c) in ('undeploy_unit','remove_unit'):
                 from event_commands import undeploy_options
                 known=undeploy_options(self.rom);old=self.model.values(index)[i]
                 if old not in known:known[old]='Existing unknown character (preserve only)'
                 options={f'{name} (${value:04X})':value for value,name in known.items()}
-            if c['opcode'] in (0x4b,0x4c):
+            if c['opcode'] in (0x08,0x4b,0x4c):
                 from event_commands import chapter_flag_options
                 from events import CHAPTERS
                 chapter=number(self.drafts[index][0])
@@ -150,9 +248,9 @@ class EventCommandWindow(tk.Toplevel):
                 known=talk_options(self.rom,i);old=self.model.values(index)[i]
                 if old not in known:known[old]=f'Existing unknown character ${old:02X}'
                 options={f'{name} (${value:02X})':value for value,name in known.items()}
-            if c['opcode'] in (0x24,0x27):
-                from event_commands import temporary_options
-                known=temporary_options(self.rom,i) if c['opcode']==0x27 else deployment_options(self.rom,i)
+            if c['opcode'] in (0x22,0x24,0x27):
+                from event_commands import temporary_options,coordinate_move_options
+                known=coordinate_move_options(self.rom,i) if c['opcode']==0x22 else temporary_options(self.rom,i) if c['opcode']==0x27 else deployment_options(self.rom,i,self.model.entry['chapter'])
                 if known:
                     current_value=self.model.values(index)[i]
                     if current_value not in known:known[current_value]=f'Existing unknown {current_value}'
@@ -188,7 +286,7 @@ class EventCommandWindow(tk.Toplevel):
                     except ValueError:self.help.set(HELP[0x12]);return
                     self.help.set(HELP[0x12]+'\n\n'+describe_word(value))
                 var.trace_add('write',explain_word);explain_word()
-        if c['opcode'] in (0x4b,0x4c):
+        if c['opcode'] in (0x08,0x4b,0x4c):
             def update_flags(*_):
                 from event_commands import chapter_flag_options
                 chapter=self.field_options[0].get(self.variables[0].get())
@@ -245,12 +343,12 @@ class EventCommandWindow(tk.Toplevel):
                 name=permanent_flag_options().get(value,'Unnamed flag')
                 self.help.set(HELP['set_permanent_flag']+f'\n\nSelected: {name} (ID {value}, ${value:02X}). This global flag will be set ON when this event executes. Changing the ROM command does not immediately change flags already stored in an existing save file.')
             self.variables[0].trace_add('write',explain_permanent);explain_permanent()
-        if schema(c)=='undeploy_unit':
+        if schema(c) in ('undeploy_unit','remove_unit','set_unit_castle'):
             import base64
             from portraits import character_portrait_id,Portrait,png_bytes
             from dialogue_characters import character_choices
             choices=character_choices(self.app)
-            face=ttk.Label(self.fields);face.grid(row=1,column=0,columnspan=2,sticky='w',pady=6)
+            face=ttk.Label(self.fields);face.grid(row=len(FIELDS[schema(c)]),column=0,columnspan=2,sticky='w',pady=6)
             def preview_undeploy(*_):
                 if self.command!=index:return
                 face.config(image='',text='Portrait preview unavailable');face.photo=None
@@ -274,6 +372,22 @@ class EventCommandWindow(tk.Toplevel):
                     self.help.set(HELP['deploy_group']+f'\n\nArmy group preview ({len(units)} records):\n'+'\n'.join(rows))
                 except ValueError as error:self.help.set(HELP['deploy_group']+'\n\nPreview unavailable: '+str(error))
             self.variables[0].trace_add('write',explain_group);explain_group()
+        if c['opcode']==0x22:
+            flags=self.model.snapshot[c['offset']+7]
+            ttk.Label(self.fields,text=f'Unknown high flag: {bool(flags & 128)} (read-only; preserved)').grid(row=9,column=0,columnspan=3,sticky='w',pady=6)
+            def coordinate_source(*_):
+                if self.command!=index:return
+                mode=self.field_options[6].get(self.variables[6].get())
+                for row in (1,2,3,4):
+                    ignored=(mode in (1,3) and row in (1,2)) or (mode==2 and row in (3,4))
+                    self.fields.grid_slaves(row=row,column=1)[0].config(state='disabled' if ignored else 'normal')
+                self.help.set(HELP[0x22]+'\n\n'+('Start coordinates come from Event Unit Slot 1.' if mode in (1,3) else 'Destination coordinates come from Event Unit Slot 2.' if mode==2 else 'Both start and destination use the explicit coordinate fields.'))
+            self.variables[6].trace_add('write',coordinate_source);coordinate_source()
+        if c['opcode']==0x3f:
+            from camera_routes import camera_preview
+            pointer=int.from_bytes(self.model.snapshot[c['offset']+1:c['offset']+4],'little')
+            ttk.Button(self.fields,text='Edit camera route...',command=self.open_route).grid(row=1,column=0,columnspan=2,sticky='w',pady=8)
+            self.help.set(HELP[0x3f]+'\n\n'+camera_preview(self.rom,pointer))
         if c['opcode']==0x27:
             from movement_routes import route_preview
             raw_command=self.model.snapshot[c['offset']:c['offset']+c['size']]
@@ -356,7 +470,7 @@ class EventCommandWindow(tk.Toplevel):
         from dialogue import check_profile
         try:check_profile(self.rom)
         except ValueError as error:messagebox.showerror('Unsupported dialogue layout',str(error),parent=self);return
-        entry=dict(address=self.model.profile['start']+node['offset']+1,group='Prologue',label=self.model.entry['label']+f' / command {command+1}',section='Events')
+        entry=dict(address=self.model.profile['start']+node['offset']+1,group=CHAPTERS[self.model.entry['chapter']],label=self.model.entry['label']+f' / command {command+1}',section='Events')
         from dialogue_window import DialogueWindow
         window=DialogueWindow(self.app,entry);window.transient(self)
         def closed(event):
@@ -386,11 +500,11 @@ class EventCommandWindow(tk.Toplevel):
     def open_route(self):
         if self.model is None or self.command is None:return
         command=self.command
-        if self.model.commands[command]['opcode']!=0x27:return
+        if self.model.commands[command]['opcode'] not in (0x27,0x3f):return
         if not self.settle():return
         if self.pending():self.load(self.current)
         from route_window import RouteWindow
-        try:RouteWindow(self,self.current,command)
+        try:RouteWindow(self,self.current,command,camera=self.model.commands[command]['opcode']==0x3f)
         except ValueError as error:messagebox.showerror('Route unavailable',str(error),parent=self)
 
     def save(self):
@@ -419,16 +533,21 @@ class EventCommandWindow(tk.Toplevel):
         except (ValueError,OSError) as error:messagebox.showerror('History unavailable',str(error),parent=self);return
         self.app.refresh_after_history();self.load(self.current)
     def launch(self):return self.app.save_and_launch(save_callback=self.save,parent=self)
-    def open_viewer(self):
-        if not self.settle():return
+    def open_linked(self,kind):
+        if self.current is None or not self.settle():return
         if self.pending():self.load(self.current)
-        window=self.app.view_events()
+        entry=catalogue()['entries'][self.current]
+        if kind=='villages':
+            window=self.app.edit_villages();rows=__import__('villages').entries();key='event_id'
+        else:
+            module=__import__(kind);rows=module.catalogue()['entries'];key='id' if kind=='reinforcements' else 'events'
+            window=getattr(self.app,'edit_'+kind)()
         if window:
-            self.grab_release();window.transient(self)
+            window.transient(self);window.chapter.current(entry['chapter']);window.populate()
+            index=next((i for i,e in enumerate(rows) if (e.get(key)==entry['id'] if key!='events' else entry['id'] in e.get(key,[]))),None)
+            if index is not None and index in window.visible:
+                window.load(index);window.list.selection_clear(0,'end');window.list.selection_set(window.visible.index(index));window.list.see(window.visible.index(index))
             window.bind('<Destroy>',lambda event:self.grab_set() if event.widget is window and self.winfo_exists() else None,add='+')
-            window.chapter.current(0);window.search.set('');window.populate()
-            match=next((i for i,(trigger,e) in enumerate(window.visible) if not trigger and e['id']==self.model.entry['id']),None) if self.model else None
-            if match is not None:window.list.selection_clear(0,'end');window.list.selection_set(match);window.select()
     def destroy(self):
         if self._parameter_reset is not None:
             self.after_cancel(self._parameter_reset);self._parameter_reset=None

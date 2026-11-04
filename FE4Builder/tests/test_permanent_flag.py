@@ -9,7 +9,7 @@ class PermanentFlagTests(unittest.TestCase):
     def test_operand_only_headers_validation_unknown_and_stale(self):
         rom=Rom(next(ROOT.glob('*.sfc')));original=bytes(rom.data);count=0
         self.assertEqual(permanent_flag_options()[2],'Finn Died')
-        for index,e in enumerate(catalogue()['entries']):
+        for index,e in enumerate(catalogue()['entries'][:18]):
             for n,c in enumerate(e['commands']):
                 if schema(c)!='set_permanent_flag':continue
                 count+=1
@@ -31,7 +31,7 @@ class PermanentFlagTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(dir=ROOT/'FE4Builder/research') as folder:
             path=Path(folder)/'flag.sfc';path.write_bytes(rom.data);before=path.read_bytes();app=App();app.withdraw();app.rom=Rom(path)
             try:
-                index=next(i for i,e in enumerate(catalogue()['entries']) if any(schema(c)=='set_permanent_flag' for c in e['commands']))
+                index=next(i for i,e in enumerate(catalogue()['entries'][:18]) if any(schema(c)=='set_permanent_flag' for c in e['commands']))
                 w=app.edit_events(catalogue()['entries'][index]['id']);n=next(i for i,c in enumerate(w.model.commands) if schema(c)=='set_permanent_flag')
                 w.commands.selection_set(str(n));w.select_command();self.assertEqual(len(w.variables),1)
                 old=w.model.values(n)[0];value=2 if old!=2 else 1

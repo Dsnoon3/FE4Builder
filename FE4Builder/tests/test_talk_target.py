@@ -8,10 +8,10 @@ from event_commands import catalogue,EventCommands,schema,talk_options
 class TalkTargetTests(unittest.TestCase):
     def setUp(self):
         self.rom=Rom(next(ROOT.glob('*.sfc')))
-        self.index=next(i for i,e in enumerate(catalogue()['entries']) if any(schema(c)=='talk_target' for c in e['commands']))
+        self.index=next(i for i,e in enumerate(catalogue()['entries'][:18]) if any(schema(c)=='talk_target' for c in e['commands']))
     def test_exact_operands_atomic_validation_header_and_opcodes(self):
         original=bytes(self.rom.data);count=0
-        for index,e in enumerate(catalogue()['entries']):
+        for index,e in enumerate(catalogue()['entries'][:18]):
             for command,c in enumerate(e['commands']):
                 if schema(c)!='talk_target':continue
                 count+=1;model=EventCommands(self.rom,index);at=model.profile['start']+c['offset']

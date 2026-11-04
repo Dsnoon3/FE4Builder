@@ -7,7 +7,7 @@ from unittest.mock import patch
 from rom import Rom, MODULES, load_module, character_modules, category_modules, DATA_DIR
 from player_items import SlotLocations, PLAYER_MODULE
 import village_window
-import event_window # Import before patching source catalogues in fixture setup.
+import event_command_window # Import before patching source catalogues in fixture setup.
 from item_slot_events import decode
 from portraits import pointer_for
 from village_scripts import signature
@@ -185,13 +185,16 @@ class PlayerItemsTests(unittest.TestCase):
             village=next(w for w in app.winfo_children() if w.winfo_class()=='Toplevel')
             self.assertEqual(village.current,0);self.assertEqual(village.model.item,7);village.destroy()
             row=next(r for r in app.slot_appearance_rows if r.kind=='event')
-            with patch('event_window.catalogue',return_value={'events':[self.event],'chapters':chapters}):
+            from event_commands import catalogue as commands
+            custom=dict(commands()['entries'][0],chapter=4)
+            with patch('events.catalogue',return_value={'events':[self.event],'chapters':chapters}),patch('event_command_window.catalogue',return_value={'entries':[custom]}):
                 self.assertTrue(app.open_item_slot_location(row))
                 viewer=next(w for w in app.winfo_children() if w.winfo_class()=='Toplevel')
                 self.assertEqual(viewer.chapter.current(),4)
-                self.assertEqual(viewer.visible[viewer.list.curselection()[0]][1]['id'],1)
-                self.assertTrue(viewer.raw.tag_ranges('item-slot-reference'))
-                self.assertIn('4A 57 01 00 07',viewer.raw.get('1.0','end'))
+                self.assertEqual(viewer.model,None)  # Generated custom bytes stay read-only.
+                self.assertEqual(viewer.current,0)
+                self.assertTrue(viewer.reference_text.tag_ranges('item-slot-reference'))
+                self.assertIn('4A 57 01 00 07',viewer.reference_text.get('1.0','end'))
                 viewer.destroy()
         finally:app.destroy()
 
