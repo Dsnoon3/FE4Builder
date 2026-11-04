@@ -24,9 +24,8 @@ def build_home(app):
             ('Stat Bonus Editor','Shared weapon profiles and ring bonus amounts.',app.edit_stat_bonuses)],
         'Maps & Events':[
             ('Objectives & Progression','Existing seize / defeat triggers, ending events and global defeat rules.',app.edit_objectives),
-            ('Event Editor (Prologue)','Edit music/SFX, sprite preparation, camera, pause and fade commands in Prologue scripts.',app.edit_events),
+            ('Event Editor','Edit chapter events, unit commands, dialogue, audio, camera routes and flags.',app.edit_events),
             ('AI Viewer','Inspect faction AI groups, behavior scripts, assigned units and shared uses.',app.view_ai),
-            ('Chapter Event Viewer','Inspect chapter conditions, event scripts and linked dialogue.',app.view_events),
             ('Reinforcement Editor','Change existing spawn positions, movement speeds and verified turn triggers.',app.edit_reinforcements),
             ('Recruitment & Conversations','Existing talk participants, dialogue links and recruitment commands.',app.edit_conversations),
             ('Map Editor','Paint terrain and resize chapter camera bounds.',app.edit_map),

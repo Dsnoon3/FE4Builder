@@ -54,7 +54,7 @@ class ConversationWindow(tk.Toplevel):
         ttk.Button(controls,text='Reload',command=self.reload).pack(side='left')
         ttk.Button(controls,text='Undo ROM',command=lambda:self.history(False)).pack(side='left',padx=6)
         ttk.Button(controls,text='Redo ROM',command=lambda:self.history(True)).pack(side='left')
-        ttk.Button(controls,text='View linked event…',command=self.view_event).pack(side='left',padx=6)
+        ttk.Button(controls,text='Edit linked event…',command=self.view_event).pack(side='left',padx=6)
         self.status=tk.StringVar();ttk.Label(self,textvariable=self.status,relief='sunken',padding=8,wraplength=1100).pack(fill='x',side='bottom')
         self.protocol('WM_DELETE_WINDOW',self.close);self.bind('<F5>',lambda _:self.launch());self.populate()
 
@@ -186,13 +186,11 @@ class ConversationWindow(tk.Toplevel):
 
     def view_event(self):
         if self.model is None or not self.settle():return
-        window=self.app.view_events()
+        ids=self.model.entry['events']
+        window=self.app.edit_events(ids[0] if ids else None)
         if window:
-            window.transient(self);window.grab_set();window.chapter.current(self.model.entry['chapter']);window.populate()
-            for i,(trigger,e) in enumerate(window.visible):
-                if not trigger and e['id'] in self.model.entry['events']:
-                    window.list.selection_clear(0,'end');window.list.selection_set(i);window.list.see(i);window.select();break
-            window.bind('<Destroy>',lambda event:self.child_closed(window,event))
+            window.transient(self)
+            window.bind('<Destroy>',lambda event:self.child_closed(window,event),add='+')
 
     def launch(self):return self.app.save_and_launch(save_callback=self.save,parent=self)
     def close(self):

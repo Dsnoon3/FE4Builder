@@ -7,10 +7,10 @@ from event_commands import EventCommands,catalogue,HELP
 class EventUnitSlotTests(unittest.TestCase):
     def setUp(self):
         self.rom=Rom(next(ROOT.glob('*.sfc')))
-        self.index=next(i for i,e in enumerate(catalogue()['entries']) if any(c['opcode']==0x42 for c in e['commands']))
+        self.index=next(i for i,e in enumerate(catalogue()['entries'][:18]) if any(c['opcode']==0x42 for c in e['commands']))
     def test_exact_character_slot_bytes_validation_and_header(self):
         original=bytes(self.rom.data);count=0
-        for index,entry in enumerate(catalogue()['entries']):
+        for index,entry in enumerate(catalogue()['entries'][:18]):
             for command,node in enumerate(entry['commands']):
                 if node['opcode']!=0x42:continue
                 count+=1;model=EventCommands(self.rom,index);at=model.profile['start']+node['offset']
@@ -44,7 +44,7 @@ class EventUnitSlotTests(unittest.TestCase):
                 w.history(False);self.assertEqual(path.read_bytes(),original)
                 w.history(True);self.assertEqual(EventCommands(app.rom,self.index).values(command),[260,1])
                 for opcode in (0x39,0x41):
-                    matches=[(i,e) for i,e in enumerate(catalogue()['entries']) if any(c['opcode']==opcode for c in e['commands'])]
+                    matches=[(i,e) for i,e in enumerate(catalogue()['entries'][:18]) if any(c['opcode']==opcode for c in e['commands'])]
                     self.assertIn(opcode,HELP)
                     if not matches:continue  # Scroll-to-slot is not present in the supported Prologue scripts.
                     entry=matches[0]

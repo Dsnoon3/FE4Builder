@@ -30,18 +30,20 @@ class EventTests(unittest.TestCase):
         for e in catalogue()['events']:
             self.assertEqual(inspect(headered,e),inspect(self.rom,e))
 
-    def test_viewer_navigation_and_search(self):
+    def test_editor_navigation_search_and_integrated_triggers(self):
         from FE4Builder import App
+        from event_commands import catalogue as commands
         app=App();app.withdraw()
         try:
-            app.rom=self.rom;window=app.view_events();app.update()
-            self.assertEqual(len(window.visible),1+sum(e['chapter']==0 for e in catalogue()['events']))
+            app.rom=self.rom;window=app.edit_events();app.update()
+            self.assertEqual(len(window.visible),sum(e['chapter']==0 for e in commands()['entries']))
+            current=window.current
             window.search.set('QuanGroupSpawn');app.update()
-            self.assertGreater(len(window.visible),1)
-            window.list.selection_clear(0,'end');window.list.selection_set(1);window.select()
-            self.assertIn('Reference bytes match',window.status.get())
-            self.assertTrue(window.scene_entries)
-            window.chapter.current(11);window.populate();app.update()
-            self.assertEqual(window.visible[0][1]['chapter'],11)
-            window.destroy()
+            self.assertGreater(len(window.visible),0);self.assertEqual(window.current,current)
+            window.list.selection_clear(0,'end');window.list.selection_set(0);window.select()
+            self.assertIn('Quan',window.model.entry['label'])
+            self.assertIn('CHECK_',window.triggers_text.get('1.0','end'))
+            window.chapter.current(11);window.change_chapter();app.update()
+            self.assertEqual(window.model.entry['chapter'],11)
+            self.assertFalse(hasattr(app,'view_events'));window.destroy()
         finally:app.destroy()

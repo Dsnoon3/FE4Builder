@@ -647,9 +647,6 @@ class App(tk.Tk):
         from dialogue_window import open_dialogue_window
         return self.prepare_window(open_dialogue_window(self))
 
-    def view_events(self):
-        from event_window import open_event_window
-        return self.prepare_window(open_event_window(self))
 
     def open_audio(self,kind=None,value=None,autoplay=False):
         from audio_window import open_audio_window
@@ -1212,25 +1209,9 @@ class App(tk.Tk):
             dialog.list.selection_clear(0,'end');dialog.list.selection_set(dialog.visible.index(target[2]));dialog.list.see(dialog.visible.index(target[2]))
             return True
         if target[0]=='event':
-            dialog=self.view_events()
+            dialog=self.edit_events(target[2])
             if dialog is None:return False
-            dialog.chapter.current(target[1]);dialog.search.set('');dialog.populate()
-            position=next((i for i,(trigger,entry) in enumerate(dialog.visible) if not trigger and entry['id']==target[2]),None)
-            if position is None:return False
-            dialog.list.selection_clear(0,'end');dialog.list.selection_set(position);dialog.list.see(position);dialog.select()
-            # Show the live bytes, where the slot operand can be inspected even
-            # when the historical symbolic event annotation no longer matches.
-            dialog.raw.master.master.select(dialog.raw.master)
-            from events import inspect,hex_dump
-            state=inspect(self.rom,dialog.visible[position][1]);start=state['start']
-            if target[3]+7>start+len(state['raw']):
-                end=min(target[3]+7,len(self.rom.data)-self.rom.header)
-                dialog.put(dialog.raw,hex_dump(bytes(self.rom.data[start+self.rom.header:end+self.rom.header]),start))
-                dialog.status.set(dialog.status.get()+f'\nSlot reference at PC ${target[3]:06X}; live byte view extended to include it.')
-            line=(target[3]-start)//16+1
-            dialog.raw.tag_configure('item-slot-reference',background='#ffe6a3',foreground='#151515')
-            dialog.raw.tag_add('item-slot-reference',f'{line}.0',f'{line}.end');dialog.raw.see(f'{line}.0')
-            return True
+            return dialog.focus_event(target[2],target[3])
         return False
 
     def toggle_advanced(self):

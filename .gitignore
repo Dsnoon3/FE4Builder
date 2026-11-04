@@ -39,6 +39,7 @@
 !/FE4Builder/assets/sigurd-standing.png
 /FE4Builder/scripts/*
 !/FE4Builder/scripts/build_release.py
+!/FE4Builder/scripts/build_event_catalogue.py
 !/FE4Builder/scripts/run_tests.py
 !/FE4Builder/scripts/Launcher.cmd
 !/FE4Builder/scripts/create_launcher.ps1

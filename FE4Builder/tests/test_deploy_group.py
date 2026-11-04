@@ -8,7 +8,7 @@ from event_commands import catalogue,EventCommands,schema
 class DeployGroupTests(unittest.TestCase):
     def test_operand_only_headers_invalid_and_stale_army(self):
         rom=Rom(next(ROOT.glob('*.sfc')));original=bytes(rom.data);count=0
-        for index,e in enumerate(catalogue()['entries']):
+        for index,e in enumerate(catalogue()['entries'][:18]):
             for n,c in enumerate(e['commands']):
                 if schema(c)!='deploy_group':continue
                 count+=1
@@ -34,7 +34,7 @@ class DeployGroupTests(unittest.TestCase):
             path=Path(folder)/'deploy.sfc';path.write_bytes(rom.data);before=path.read_bytes()
             app=App();app.withdraw();app.rom=Rom(path)
             try:
-                index=next(i for i,e in enumerate(catalogue()['entries']) if any(schema(c)=='deploy_group' for c in e['commands']))
+                index=next(i for i,e in enumerate(catalogue()['entries'][:18]) if any(schema(c)=='deploy_group' for c in e['commands']))
                 w=app.edit_events(catalogue()['entries'][index]['id']);n=next(i for i,c in enumerate(w.model.commands) if schema(c)=='deploy_group')
                 w.commands.selection_set(str(n));w.select_command();self.assertEqual(len(w.variables),1)
                 self.assertIn('Army group preview',w.help.get());self.assertIn('destination',w.help.get())

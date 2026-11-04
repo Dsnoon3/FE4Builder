@@ -6,6 +6,7 @@ from movement_routes import DIRECTIONS
 ARENA=0x5f0000
 SIZE=0x10000
 MAGIC=b'FE4BROUTESv1'.ljust(16,b'\0')
+ROUTE_POINTERS={0x27:7,0x3f:1}
 SIMPLE={0x80:'End',0x81:'Halt',0x85:'Face left',0x86:'Face right',0x87:'Face up',0x88:'Face down'}
 
 def read_route(rom,pointer):
@@ -41,28 +42,35 @@ def encode_steps(steps):
 def callers(rom,pointer):
     result=[];unavailable=[];target=pc_address(pointer)
     for i,entry in enumerate(catalogue()['entries']):
+        if not any(c['opcode'] in ROUTE_POINTERS for c in entry['commands']):continue
         try:model=EventCommands(rom,i)
         except ValueError:unavailable.append(entry['label']);continue
         for n,c in enumerate(model.commands):
-            if c['opcode']!=0x27:continue
-            raw=model.snapshot[c['offset']+7:c['offset']+10];p=int.from_bytes(raw,'little')
+            if c['opcode'] not in ROUTE_POINTERS:continue
+            offset=ROUTE_POINTERS[c['opcode']]
+            raw=model.snapshot[c['offset']+offset:c['offset']+offset+3];p=int.from_bytes(raw,'little')
             try:match=pc_address(p)==target
             except ValueError:match=False
             if match:result.append((i,n,f"{entry['label']} - command {n+1} (event {entry['id']:03X})"))
     return result,unavailable
 
 class RouteDraft:
+    opcode=0x27
+    pointer_offset=7
+    route_name='movement'
+    decode=staticmethod(read_route)
+    def encode(self,steps):return encode_steps(steps)
     def __init__(self,rom,event,command):
         self.rom=rom;self.event=event;self.command=command;self.snapshot=bytes(rom.data)
         model=EventCommands(rom,event);c=model.commands[command]
-        if c['opcode']!=0x27:raise ValueError('Choose Move Temporary by Script.')
-        self.address=model.profile['start']+c['offset']+7+rom.header
+        if c['opcode']!=self.opcode:raise ValueError('Choose a matching '+self.route_name+' route command.')
+        self.address=model.profile['start']+c['offset']+self.pointer_offset+rom.header
         self.pointer=int.from_bytes(rom.data[self.address:self.address+3],'little')
-        self.steps,self.original=read_route(rom,self.pointer)
+        self.steps,self.original=self.decode(rom,self.pointer)
         self.users,self.unavailable=callers(rom,self.pointer)
     def write(self,steps):
         if bytes(self.rom.data)!=self.snapshot:raise ValueError('ROM changed. Reopen the route editor before saving.')
-        payload=encode_steps(steps)
+        payload=self.encode(steps)
         if steps==self.steps:return []
         if len(self.rom.data)-self.rom.header!=0x800000:raise ValueError('Private routes require an 8 MiB ROM.')
         base=ARENA+self.rom.header;block=bytearray(self.rom.data[base:base+SIZE])
@@ -73,16 +81,18 @@ class RouteDraft:
             if len(set(block))!=1 or block[0] not in (0,255):raise ValueError('Private route storage is occupied. No data was changed.')
             # Existing catalogued references into the proposed arena prohibit claiming it.
             for i,e in enumerate(catalogue()['entries']):
+                if not any(c['opcode'] in ROUTE_POINTERS for c in e['commands']):continue
                 model=EventCommands(self.rom,i)
                 for c in model.commands:
-                    if c['opcode']==0x27:
-                        p=int.from_bytes(model.snapshot[c['offset']+7:c['offset']+10],'little')
+                    if c['opcode'] in ROUTE_POINTERS:
+                        offset=ROUTE_POINTERS[c['opcode']]
+                        p=int.from_bytes(model.snapshot[c['offset']+offset:c['offset']+offset+3],'little')
                         if ARENA<=pc_address(p)<ARENA+SIZE:raise ValueError('An existing route already references the proposed storage.')
             used=64;block[:64]=bytes(64);block[:16]=MAGIC
         if used+len(payload)>SIZE:raise ValueError('Private route storage is full. No data was changed.')
         pointer=pointer_for(ARENA+used);block[used:used+len(payload)]=payload
         block[16:20]=(used+len(payload)).to_bytes(4,'little');block[20:52]=hashlib.sha256(block[:20]+block[52:]).digest()
         data=bytearray(self.rom.data);data[base:base+SIZE]=block;data[self.address:self.address+3]=pointer.to_bytes(3,'little')
-        details=[f'Private movement route ${self.pointer:06X} -> ${pointer:06X}; only selected event command changed.']
+        details=[f'Private {self.route_name} route ${self.pointer:06X} -> ${pointer:06X}; only selected event command changed.']
         self.rom.data[:]=data
         return details

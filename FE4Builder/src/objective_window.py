@@ -199,13 +199,12 @@ class ObjectiveWindow(tk.Toplevel):
 
     def view_event(self):
         if self.current is None or not self.settle():return
-        e=catalogue()['entries'][self.current];window=self.app.view_events()
+        entry=catalogue()['entries'][self.current];ids=entry['events']
+        window=self.app.edit_events(ids[0] if ids else None)
         if window:
-            window.transient(self);window.grab_set();window.chapter.current(e['chapter']);window.populate()
-            for i,(trigger,entry) in enumerate(window.visible):
-                if not trigger and entry['id'] in e['events']:
-                    window.list.selection_clear(0,'end');window.list.selection_set(i);window.list.see(i);window.select();break
-            window.bind('<Destroy>',lambda event:self.child_closed(window,event))
+            window.transient(self)
+            if not ids:window.chapter.current(entry['chapter']);window.change_chapter()
+            window.bind('<Destroy>',lambda event:self.child_closed(window,event),add='+')
 
     def open_dialogue(self):
         if not self.scenes or not self.settle():

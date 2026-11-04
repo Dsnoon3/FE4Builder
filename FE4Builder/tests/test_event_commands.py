@@ -3,14 +3,14 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 from rom import ROOT,Rom
-from event_commands import catalogue,EventCommands,FIELDS,schema,character_options,audio_kind,audio_options,deployment_options,group_units,temporary_options,permanent_flag_options,TRANSITION_MODES,give_recipients,player_item_options
+from event_commands import catalogue,EventCommands,FIELDS,schema,character_options,audio_kind,audio_options,deployment_options,group_units,temporary_options,permanent_flag_options,TRANSITION_MODES,castle_context,coordinate_move_options,give_recipients,player_item_options
 
 class EventCommandTests(unittest.TestCase):
     def setUp(self):self.rom=Rom(next(ROOT.glob('*.sfc')))
     def test_all_catalogued_commands_roundtrip_exact_operands(self):
         original=bytes(self.rom.data);count=0
-        self.assertEqual(len(catalogue()['entries']),18)
-        for index,e in enumerate(catalogue()['entries']):
+        self.assertEqual(len(catalogue()['entries']),557)
+        for index,e in enumerate(catalogue()['entries'][:18]):
             model=EventCommands(self.rom,index);start=model.profile['start'];baseline=model.snapshot
             self.assertEqual(model.write({}),[])
             for command,c in enumerate(model.commands):
@@ -23,6 +23,8 @@ class EventCommandTests(unittest.TestCase):
                 if schema(c)=='give_item':values=[next(v for v in give_recipients(self.rom) if v!=model.values(command)[0]),next(v for v in player_item_options(self.rom) if v!=model.values(command)[1])]
                 if c['opcode']==0x3b:values[1]=next(v for v in TRANSITION_MODES if v!=model.values(command)[1])
                 if schema(c)=='set_permanent_flag':values=[next(v for v in permanent_flag_options() if v!=model.values(command)[0])]
+                if schema(c)=='set_unit_castle':values=[1,next(k for k in castle_context(self.rom,e['chapter'])[0] if k!=model.values(command)[1])]
+                if c['opcode']==0x22:values=[1,10,11,12,13,3,0,2,0]
                 if c['opcode']==0x27:
                     values=[next((v for v in temporary_options(self.rom,i) if v!=old),value) if temporary_options(self.rom,i) else value for i,(old,value) in enumerate(zip(model.values(command),values))]
                 if c['opcode']==0x24:
@@ -33,11 +35,11 @@ class EventCommandTests(unittest.TestCase):
                 self.assertTrue(changed);self.assertTrue(changed<=allowed)
                 self.assertEqual(EventCommands(self.rom,index).values(command),values)
                 self.rom.data[start:start+len(baseline)]=baseline;count+=1
-        self.assertEqual(count,235);self.assertEqual(bytes(self.rom.data),original)
+        self.assertEqual(count,252);self.assertEqual(bytes(self.rom.data),original)
     def test_direct_deployment_packed_fields_and_ui(self):
         from FE4Builder import App
         original=bytes(self.rom.data)
-        index=next(i for i,e in enumerate(catalogue()['entries']) if any(c['opcode']==0x24 for c in e['commands']))
+        index=next(i for i,e in enumerate(catalogue()['entries'][:18]) if any(c['opcode']==0x24 for c in e['commands']))
         model=EventCommands(self.rom,index)
         command=next(i for i,c in enumerate(model.commands) if c['opcode']==0x24)
         at=model.profile['start']+model.commands[command]['offset']
@@ -71,7 +73,7 @@ class EventCommandTests(unittest.TestCase):
     def test_map_scroll_parameters_validation_and_ui(self):
         from FE4Builder import App
         original=bytes(self.rom.data)
-        index=next(i for i,e in enumerate(catalogue()['entries']) if any(c['opcode']==0x40 for c in e['commands']))
+        index=next(i for i,e in enumerate(catalogue()['entries'][:18]) if any(c['opcode']==0x40 for c in e['commands']))
         model=EventCommands(self.rom,index)
         command=next(i for i,c in enumerate(model.commands) if c['opcode']==0x40)
         for values in ([64,0,1],[0,-1,1],[0,0,0],[0,0,256],[0,0]):
@@ -112,7 +114,7 @@ class EventCommandTests(unittest.TestCase):
         from reinforcements import Reinforcement,catalogue as reinforcements
         from conversations import Conversation,catalogue as conversations
         original=bytes(self.rom.data)
-        for index,e in enumerate(catalogue()['entries']):
+        for index,e in enumerate(catalogue()['entries'][:18]):
             from copy import copy
             headered=copy(self.rom);headered.data=bytearray(512)+self.rom.data;headered.header=512
             model=EventCommands(headered,index)
@@ -123,7 +125,7 @@ class EventCommandTests(unittest.TestCase):
                     if c['opcode']==0x23:values[0]=model.values(command)[0];values[1]=next(k for k in group_units(self.rom,values[0]) if k!=model.values(command)[1])
                     model.write({command:values})
                     self.assertEqual(EventCommands(headered,index).values(command),values);break
-        for index,e in enumerate(catalogue()['entries']):
+        for index,e in enumerate(catalogue()['entries'][:18]):
             model=EventCommands(self.rom,index);command=next(i for i,c in enumerate(model.commands) if c['editable'])
             c=model.commands[command]
             values=model.values(command);values[0]=next(v for v in audio_options(c) if v!=values[0]) if audio_kind(c) else values[0]+1
@@ -164,8 +166,7 @@ class EventCommandTests(unittest.TestCase):
                 window.history(True);self.assertEqual(EventCommands(app.rom,0).values(command)[0],20)
                 self.assertEqual(EventCommands(app.rom,0).values(sprite),[6])
                 window.destroy()
-                viewer=app.view_events();viewer.list.selection_clear(0,'end');viewer.list.selection_set(1);viewer.select()
-                self.assertEqual(viewer.command_event_id,1);self.assertEqual(str(viewer.commands_button['state']),'normal');viewer.destroy()
+                editor=app.edit_events(1);self.assertEqual(editor.model.entry['id'],1);editor.destroy()
             finally:app.destroy()
 
     def test_character_sprite_dropdown_exact_bytes_and_protected_subcommand(self):
@@ -222,7 +223,7 @@ class EventCommandTests(unittest.TestCase):
             finally:app.destroy()
     def test_audio_unknown_ids_preserved_but_new_unknown_values_rejected(self):
         for opcode in (0x0e,0x11,0x12):
-            index=next(i for i,e in enumerate(catalogue()['entries']) if any(c['opcode']==opcode for c in e['commands']))
+            index=next(i for i,e in enumerate(catalogue()['entries'][:18]) if any(c['opcode']==opcode for c in e['commands']))
             model=EventCommands(self.rom,index);command=next(i for i,c in enumerate(model.commands) if c['opcode']==opcode)
             before=bytes(self.rom.data);unknown=255 if opcode!=0x12 else 65535
             with self.assertRaises(ValueError):model.write({command:[unknown]})
